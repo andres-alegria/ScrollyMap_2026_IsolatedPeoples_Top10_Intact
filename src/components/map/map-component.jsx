@@ -5,6 +5,16 @@ import { useGlobeSequence, useGlobeVisibility } from './use-globe-sequence';
 import { Map as MapGL, Marker } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+// The dot that marks a land on the globe.
+//
+// The published style is shared with the loss piece and paints its `centroids`
+// layer red, which is right there and wrong here: on this story a dot is not a
+// threat, it is a place. Setting the paint property at runtime recolours the
+// layer in this reader's browser only — it does not touch the style in the
+// Mongabay account, so it needs no re-upload and cannot affect the other piece.
+const GLOBE_DOT = '#4fb98c';                // adjust globe dot colour
+const GLOBE_DOT_LAYERS = ['centroids', 'centroids top 10'];
+
 const Map = (props) => {
   const { chapters, accessToken, mapStyle, showMarkers, setCurrentChapter, externalLayers, currentChapterId, currentAction, globeAtmosphere, globeWindows, globeFinale } = props;
   const [loaded, setLoaded] = useState(false);
@@ -564,8 +574,8 @@ const Map = (props) => {
           type: 'circle',
           source: id,
           paint: {
-            // matched to the centroid dots in the published style
-            'circle-color': '#4fb98c',              // adjust dot colour
+            // matched to the centroid dots, which are recoloured just below
+            'circle-color': GLOBE_DOT,
             'circle-radius': 6,                     // adjust dot size
             'circle-stroke-color': '#f1ebdd',
             'circle-stroke-width': 1,
@@ -589,6 +599,12 @@ const Map = (props) => {
     pointLayer('ranked-ten', (chapters || [])
       .filter((c) => c && c.areaId && Array.isArray(c.locator))
       .map((c) => pt(c.id, c.locator)));
+
+    // Repaint the style's own centroid dots to this story's green. See
+    // GLOBE_DOT: this is a local override, not an edit to the shared style.
+    GLOBE_DOT_LAYERS.forEach((id) => {
+      if (map.getLayer(id)) map.setPaintProperty(id, 'circle-color', GLOBE_DOT);
+    });
 
     return undefined;
   }, [loaded, map, chapters]);
