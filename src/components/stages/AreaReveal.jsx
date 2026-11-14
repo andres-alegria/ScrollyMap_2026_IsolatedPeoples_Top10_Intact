@@ -58,6 +58,12 @@ const refreshWhenSettled = () => {
 const AreaReveal = ({
   areaId,
   panels = {},
+  // The opening section of the countdown, whose panels have to be there the
+  // moment the reader arrives. It is set in config rather than inferred from
+  // the rank, because which rank opens the countdown is a property of the
+  // story: the loss piece opens at #10 and climbs to #1, and this one opens
+  // whereever its ranked list starts.
+  eager = false,
   scale = {},
   locator,
   adm1,
@@ -69,7 +75,6 @@ const AreaReveal = ({
 }) => {
   const { t } = useTranslation();
   const { rank, title, description } = chapter;
-  const first = rank === '#10';          // the area the countdown opens on
   const sectionRef = useRef(null);
   const frameRef = useRef(null);
   const interiorRef = useRef(null);
@@ -210,7 +215,7 @@ const AreaReveal = ({
               srcSet={panelSrcSet(panels.region, PANEL_W)}
               sizes={PANEL_SIZES}
               alt=""
-              loading={first ? 'eager' : 'lazy'}
+              loading={eager ? 'eager' : 'lazy'}
               decoding="async"
             />
             <img
@@ -220,7 +225,7 @@ const AreaReveal = ({
               srcSet={panelSrcSet(panels.interior, PANEL_W)}
               sizes={PANEL_SIZES}
               alt=""
-              loading={first ? 'eager' : 'lazy'}
+              loading={eager ? 'eager' : 'lazy'}
               decoding="async"
               style={{ opacity: 0 }}
             />

@@ -316,9 +316,15 @@ export default {
       globe: {
         center: [-72.0, -6.0], zoom: 1.18,
         start: 'top bottom', end: 'top 80%',
-        legend: 'The 10 lands with the most intact primary forests',
-        layers: { centroids: 0, 'centroids-label': 0, 'centroids top 10': 0,
-                  'ranked-ten': 0.9, 'chapter-focus': 0 },
+        // PENDING THE NEW TILESETS. `ranked-ten` and `centroids top 10` in
+        // the shared Mapbox style are still the loss piece's ten lands, so
+        // drawing them here would put the wrong ten under a caption claiming
+        // these. Until the intact tilesets are published this beat shows the
+        // 101 mapped lands, which is true of both stories, and says so.
+        // Then: centroids 0, 'ranked-ten' 0.9, and the caption below.
+        legend: 'Indigenous and protected lands with confirmed presence of isolated peoples',
+        layers: { centroids: 0.9, 'centroids-label': 0, 'centroids top 10': 0,
+                  'ranked-ten': 0, 'chapter-focus': 0 },
       },
       alignment: 'fully',
       globeOnly: true,

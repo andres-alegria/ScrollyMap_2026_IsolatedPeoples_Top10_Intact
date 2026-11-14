@@ -8,7 +8,8 @@ import './area-menu.scss';
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Jump bar for the ranked areas — all ten visible at once, #10 left to #1
+ * Jump bar for the ranked areas — all of them visible at once, in the order
+ * the countdown climbs
  * right, so the countdown can be read as a whole rather than only in sequence.
  *
  * Appears once the chapter that introduces the top ten has been read, and
