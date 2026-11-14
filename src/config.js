@@ -74,36 +74,44 @@ export default {
   // Globe atmosphere. space-color is matched to the paper texture in
   // src/assets/background-image.jpg so the sphere reads as sitting on the
   // page rather than floating in Mapbox's default starfield.
-  // The globe leaves and comes back. It goes out across chapter four's bottom
-  // edge, so the hand-off line in chapter five has the screen to itself, then
-  // returns for chapter six — bigger and centred — to show the ranked ten on
-  // their own. Shown that way it is a beat the reader stops at, rather than
+  // The globe leaves and comes back. It goes out across chapter five's bottom
+  // edge, so the hand-off line in chapter six has the screen to itself, then
+  // returns for chapter seven — bigger and centred — to show the ranked lands
+  // on their own. Shown that way it is a beat the reader stops at, rather than
   // something that dissolves under a headline just as it arrives.
+  // NOTE ON THE CHAPTER NUMBERS BELOW. This piece carries one prose chapter
+  // more than the loss piece does — chapter 05, the one that holds the 0.03%
+  // and the Central Park comparison — so every trigger here sits one number
+  // later than its counterpart there: last prose chapter 05, hand-off line 06,
+  // the held globe 07. Copying a trigger across from the loss piece without
+  // moving it on by one fires it a whole chapter early, which does not error:
+  // it quietly raises the big centred globe underneath the hand-off line and
+  // leaves that line's charcoal text sitting unreadable on a black sphere.
   globeWindows: [
     { reveal: { trigger: 'chapter 01', start: 'top bottom', end: 'top 75%' },
       // Out a little earlier than the default would take it. The finale frame
-      // is switched on a screen before chapter 06, and the globe has to be
+      // is switched on a screen before chapter 07, and the globe has to be
       // gone by then: the frame resize is a jump in the sphere's size, and the
       // reader should not be looking at the globe when it happens.
-      fadeOut: { trigger: 'chapter 04', start: 'bottom center', end: 'bottom 25%' } },
+      fadeOut: { trigger: 'chapter 05', start: 'bottom center', end: 'bottom 25%' } },
     // Rises behind the hand-off line rather than after it: by the time that
     // line's card starts leaving, the globe is already there, and the card
     // slides off over a finished picture instead of a fading one.
     //
-    // Both ends are measured from chapter 06's own top so they cannot collide.
+    // Both ends are measured from chapter 07's own top so they cannot collide.
     // They used to be read from opposite edges — the reveal from the top, the
     // fade-out from the bottom — and the fade began fifteen pixels before the
     // reveal finished, which capped the globe at four fifths: it never once
     // reached full strength.
-    { reveal: { trigger: 'chapter 06', start: 'top 90%', end: 'top 55%' },
-      fadeOut: { trigger: 'chapter 06', start: 'top top-=600', end: 'top top-=900' } },
+    { reveal: { trigger: 'chapter 07', start: 'top 90%', end: 'top 55%' },
+      fadeOut: { trigger: 'chapter 07', start: 'top top-=600', end: 'top top-=900' } },
   ],
 
   // Which chapter gets the larger centred frame (see .map-container--finale).
   // Switched on in the gap between the first globe's fade-out and the second's
   // rise, with margin either side: the frame resize is a jump in the sphere's
   // size, so it has to happen while nothing is on screen to see it.
-  globeFinale: { trigger: 'chapter 06', start: 'top 95%' },
+  globeFinale: { trigger: 'chapter 07', start: 'top 95%' },
 
   globeAtmosphere: {
     // mapbox-gl creates its WebGL context with alpha:true, so a transparent
