@@ -72,24 +72,24 @@ const AreaReveal = ({
   const first = rank === '#10';          // the area the countdown opens on
   const sectionRef = useRef(null);
   const frameRef = useRef(null);
-  const extentRef = useRef(null);
+  const interiorRef = useRef(null);
   const indRef = useRef(null);
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section || !panels.loss) return undefined;
+    if (!section || !panels.region) return undefined;
 
     // The next section climbs over this one on its own, and it starts doing so
     // at progress dwell / (dwell + 1) — nothing in the timeline below
     // controls that. So the last beat has to be established
-    // well before that point, or the next panel covers the loss layer while
+    // well before that point, or the next panel covers the region layer while
     // the reader is still taking it in. At dwell 2.6 the hand-over begins at
     // about 0.72, which is what recedeFrom is matched to. The crossfade is
-    // finished by 0.46, leaving the loss layer a quarter of the section to be
+    // finished by 0.46, leaving the interior layer a quarter of the section to be
     // read before anything starts moving.
     const {
-      holdLoss = 0.14,            // adjust: how long the loss layer holds alone
-      toExtent = 0.46,            // adjust: when the extent layer is fully in
+      holdRegion = 0.14,            // adjust: how long the region layer holds alone
+      toInterior = 0.46,            // adjust: when the interior layer is fully in
       recedeFrom = 0.72,          // adjust: when the section starts giving way
       recedeTo = 1,               // adjust: when it has finished giving way
       fade = 0.45,                // adjust: how far it fades while giving way
@@ -135,7 +135,7 @@ const AreaReveal = ({
       start: 'top bottom+=120%',
       once: true,
       onEnter: () => {
-        [panels.loss, panels.extent].forEach((src) => {
+        [panels.region, panels.interior].forEach((src) => {
           if (src) { const im = new Image(); im.src = src; }
         });
       },
@@ -155,13 +155,14 @@ const AreaReveal = ({
       onRefresh: anchorOrigin,
       onUpdate: (self) => {
         const p = self.progress;
-        // One crossfade: the loss layer underneath, the 2025 extent growing
-        // over it. Loss first on purpose — the reader sees what was taken
-        // before seeing what is left, rather than the other way round.
-        const toExtentNow = ramp(p, holdLoss, toExtent);
-        if (extentRef.current) extentRef.current.style.opacity = toExtentNow;
+        // One crossfade: the region underneath, the interior growing over
+        // it. The region first on purpose — the reader sees the clearing
+        // arrive at the boundary before seeing the forest the boundary
+        // holds, which is the sentence this piece is making.
+        const toInteriorNow = ramp(p, holdRegion, toInterior);
+        if (interiorRef.current) interiorRef.current.style.opacity = toInteriorNow;
         // label units: 0 at the first box, 1 at the second
-        if (indRef.current) indRef.current.setProgress(toExtentNow);
+        if (indRef.current) indRef.current.setProgress(toInteriorNow);
         // recede as the next section climbs over this one
         const r = ramp(p, recedeFrom, recedeTo);
         // Promote only while this is actually moving. Left on permanently it
@@ -205,8 +206,8 @@ const AreaReveal = ({
                 browser has a long run-up to fetch them in. */}
             <img
               className="area-reveal__img"
-              src={panels.loss}
-              srcSet={panelSrcSet(panels.loss, PANEL_W)}
+              src={panels.region}
+              srcSet={panelSrcSet(panels.region, PANEL_W)}
               sizes={PANEL_SIZES}
               alt=""
               loading={first ? 'eager' : 'lazy'}
@@ -214,9 +215,9 @@ const AreaReveal = ({
             />
             <img
               className="area-reveal__img"
-              ref={extentRef}
-              src={panels.extent}
-              srcSet={panelSrcSet(panels.extent, PANEL_W)}
+              ref={interiorRef}
+              src={panels.interior}
+              srcSet={panelSrcSet(panels.interior, PANEL_W)}
               sizes={PANEL_SIZES}
               alt=""
               loading={first ? 'eager' : 'lazy'}
