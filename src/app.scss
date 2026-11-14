@@ -1,0 +1,328 @@
+// Two faces, two jobs. The display face is for the rank and the territory
+// name and nothing else; everything that is not a headline takes the text
+// face. New rules should point at these rather than naming a family, which is
+// how a two-font piece drifts into looking like a five-font one.
+:root {
+  --font-display: 'Lora', serif;              /* adjust display face */
+  --font-text: 'Open Sans', sans-serif;       /* adjust text face */
+
+  // One ink ramp, three steps. #181818 and #222222 used to sit on adjacent
+  // lines as if they were different tones; nothing could read the difference.
+  --ink: #181818;                             /* adjust primary text colour */
+  --ink-soft: #4a5654;                        /* adjust secondary text colour */
+  --ink-mute: #6b7672;                        /* adjust tertiary / furniture colour */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-text);
+
+  // Paper texture behind the whole piece, tiled full width. The globe's space
+  // colour is matched to it in config.js (globeAtmosphere) so the sphere sits
+  // on the same ground rather than on Mapbox's black starfield.
+  background-color: #f7f4ee;              // adjust paper tone here
+  // paper-grain.jpg is the original texture with its vignette divided out, so
+  // it tiles without repeating dark corners. Tiled near its own scale rather
+  // than stretched across the viewport, which matches the grain density of
+  // the intro artwork.
+  background-image: url('./assets/paper-grain.jpg');
+  background-repeat: repeat;
+  background-size: 256px 256px;           // adjust grain scale
+  // Deliberately NOT background-attachment: fixed. A fixed background cannot be
+  // scrolled by translating what is already rasterised — the browser has to
+  // repaint the whole viewport on every scroll frame, which is one of the
+  // best-known causes of scroll jank. The grain is uniform and fine, so
+  // scrolling with the page is visually indistinguishable.
+}
+
+.font-lora {
+  font-family: var(--font-display);
+}
+
+a,
+a:hover,
+a:visited {
+  color: #0071bc;
+}
+
+// Note: deliberately NOT named .mapboxgl-map — that class is also used
+// internally by Mapbox GL JS's own stylesheet (mapbox-gl.css) for its map
+// container, and importing that stylesheet after this one would silently
+// override position: fixed with its own position: relative.
+.map-container {
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: -5;
+  // transparent, so the paper texture on <body> shows through around the globe
+  background: transparent;
+}
+
+// Wide screens: the globe stops being a backdrop and becomes a companion to
+// the copy — a square held at the right of the viewport while the chapters
+// scroll past on the left. Square because the globe is a circle: a 100vw box
+// wastes most of its area and pushes the sphere off-centre.
+//
+// Below this width there is no room for two columns, so the globe stays
+// full-bleed behind the copy and the chapters keep their paper band, which is
+// what makes the text readable over the dark ocean.
+@media (min-width: 1000px) {
+  .map-container {
+    // Centred with auto margins against top:0/bottom:0 rather than with
+    // translateY(-50%). Safari will happily composite the DOM children of a
+    // transformed, negatively-stacked fixed element while dropping the WebGL
+    // canvas inside it — the map goes blank but the Mapbox watermark stays.
+    // No transform here means no such layer to get wrong.
+    top: 0;
+    bottom: 0;
+    right: 3vw;
+    left: auto;
+    margin: auto 0;
+    // Floored as well as capped: the sphere is sized as a fraction of this
+    // frame (see FIT_BASE_W in use-globe-sequence.js), so letting the frame
+    // collapse at the narrow end of the breakpoint shrinks the globe with it.
+    width: clamp(440px, 44vw, 600px);  // adjust globe size
+    height: clamp(440px, 44vw, 600px);
+    // The backdrop had to sit behind the copy; this does not — it is beside
+    // it. Leaving it at -5 puts a GL canvas below the root background, which
+    // is the other half of the Safari problem above. Nothing overlaps it on
+    // this breakpoint, so a normal stacking position is safe.
+    z-index: 0;
+  }
+}
+
+// The finale frame: the globe comes back after the hand-off line, centred and
+// larger, to show the ranked ten on their own. Two classes for specificity —
+// the breakpoint rule above sets right/left/margin and would otherwise win on
+// source order.
+// Wide screens only. On narrow ones the globe is already full-bleed with a
+// screen to itself, and a fixed frame wider than the viewport would push it
+// and its caption off the right-hand edge.
+@media (min-width: 1000px) {
+  .map-container.map-container--finale {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    // As large as the screen allows, rather than a fixed box.
+    //
+    // Width and height do different jobs here, so they are not the same
+    // number. The sphere is drawn at about 92% of the frame's WIDTH (see
+    // FIT_BASE_W in use-globe-sequence.js) and takes no notice of its height,
+    // so the width alone sets how big the globe is: 84vh of width puts it at
+    // roughly 77% of the viewport height, half as large again as the fixed
+    // box it replaces. Taking the viewport's shorter side means it cannot
+    // grow past an edge and lose its limb. The height is then the full
+    // viewport, which centres that sphere on the screen and leaves a clear
+    // band above it for the caption — which stays inside this box so that it
+    // still fades with the globe.
+    width: min(84vh, 84vw);            // adjust finale globe size
+    height: 100vh;
+  }
+}
+
+// Names whatever the globe is showing at this point in the story. Written
+// imperatively by useGlobeSequence, which swaps it on the same frame the dots
+// change, so the two can never disagree; it inherits the globe box's opacity,
+// so it fades in and out with the globe.
+//
+// Absolute inside the box rather than fixed to the viewport. On narrow
+// screens the box sits behind the copy's paper band, which means the caption
+// is covered whenever the globe is covered and visible whenever it is — i.e.
+// only on the screen the globe has to itself between chapters. A caption
+// pinned over the copy instead was legible but captioned a globe the reader
+// could not see.
+.globe-legend {
+  position: absolute;
+  z-index: 1;                          // over the map canvas, which follows it
+  left: 0;
+  right: 0;
+  top: 0;                              // adjust caption height on narrow screens
+  padding: 0.5rem 1rem;                // adjust bar depth
+  background: #f7f4ee;                 // adjust bar tone
+  color: var(--ink);                   // adjust bar text colour
+  text-align: center;
+  font-family: var(--font-text);
+  font-size: 1.0625rem;                // adjust bar text size
+  font-weight: 600;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+@media (min-width: 1000px) {
+  .globe-legend {
+    // Across the upper part of the sphere. bottom has to be reset to auto:
+    // the base rule above sets top for narrow screens, and with both set the
+    // bar stretches the height of the frame and its paper ground hides the
+    // globe behind it.
+    top: 7%;                           // adjust bar height on the globe
+    bottom: auto;
+    font-size: 1.1875rem;              // adjust bar text size
+  }
+
+  // ...except on the finale globe, where the bar sits in the paper above the
+  // limb instead of across it. The bar's ground is the page's own paper, so
+  // wherever it crosses the sphere it takes a flat bite out of the top — on
+  // the side globe that reads as a label sitting on the world, but on the one
+  // the reader is given a whole screen for it reads as a globe with its top
+  // cut off. Clear of the limb, that globe is a complete circle.
+  .map-container--finale .globe-legend {
+    top: 3%;                           // adjust finale caption height
+  }
+}
+.map-container canvas {
+  background: transparent;
+}
+// Keep Mapbox/OSM attribution visible (required by Mapbox's terms of service)
+// but small and unobtrusive, rather than hiding it outright.
+.mapboxgl-ctrl-attrib {
+  opacity: 0.8;
+  font-size: 8px;
+  background: transparent;
+}
+
+.track-marker {
+  display: flex;
+  filter: drop-shadow(0 0 var(--marker-border-width, 2px) var(--marker-border-color, #fff));
+}
+.track-marker svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+#header {
+  margin: 3vh auto;
+  width: 90vw;
+  padding: 2vh;
+  text-align: center;
+}
+
+#footer {
+  min-height: 5vh;
+  // The final ranked section is still pinned when the document ends — pinned
+  // elements are position:fixed, so it covers the whole viewport and paints its
+  // paper over the footer. Lifting the footer into its own stacking context
+  // puts it back on top.
+  position: relative;
+  z-index: 30;
+}
+
+#features {
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+  z-index: 100;
+}
+
+@media (max-width: 750px) {
+  #features {
+    width: 90vw;
+    margin: 0 auto;
+  }
+}
+
+.light {
+  color: #444;
+  background-color: #fafafa;
+}
+
+.mongabay {
+  color: #222;
+  background-color: #fff;
+  background-color: transparent;   // paper texture now comes from body
+}
+
+.dark {
+  color: #fafafa;
+  background-color: #444;
+}
+
+.footer-mongabay {
+  color: #fff;
+  background-color: #181818;            // adjust footer ground
+}
+
+.footer-light {
+  color: #fff;
+  background-color: #222;
+}
+
+.footer-dark {
+  color: #fff;
+  background-color: #222;
+}
+
+// Every mark ships as white artwork (three SVGs and a PNG), so none can simply
+// be given a fill. On the paper ground they need knocking back: brightness(0)
+// flattens any of them to black and invert(9.4%) lifts that to exactly
+// rgb(24,24,24) = #181818. On the dark footer they are used as they ship.
+%mark-on-paper {
+  filter: brightness(0) invert(9.4%);   // adjust mark colour via the invert %
+}
+
+// Travels with the reader over the paper, above the footer's stacking context.
+.logos--floating {
+  z-index: 40;
+  transition: opacity 0.2s ease;
+
+  img { @extend %mark-on-paper; }
+}
+
+// Hidden once it reaches the footer, where the inline copy takes over.
+.logos--parked {
+  opacity: 0;
+  visibility: hidden;
+}
+
+// Footer row: social marks at the left, logo at the right, both held to the
+// same measure as the credits paragraph above them.
+.footer__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 41rem;                     // matches .credits__inner
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.social-icons--footer {
+  gap: 1.5rem;                          // adjust spacing between marks
+}
+
+.social-icons--footer img,
+.logos--inline img {
+  height: 18px;                         // adjust footer mark size
+  width: auto;
+}
+
+// The social marks ship white and are used as they are. The Mongabay lockup
+// ships black, so on the dark footer it has to be turned the other way.
+.logos--inline img {
+  height: 22px;                         // adjust footer logo size
+  filter: brightness(0) invert(1);
+}
+
+// Intro: stacked at the bottom-left corner, on paper, so knocked back to dark.
+.social-icons--intro {
+  flex-direction: column;
+  gap: 1.4rem;
+  margin: 0 0 1.5rem 1.25rem;
+
+  img {
+    height: 18px;                       // adjust intro mark size
+    width: auto;
+    @extend %mark-on-paper;
+  }
+}
+
+// The floating Mongabay mark sits bottom-right over the content. There is no
+// room for it on a phone — it lands on the last line of the ranked sections —
+// and the mark already appears in the footer.
+@media (max-width: 820px) {
+  .logos--floating {
+    display: none;
+  }
+}

@@ -1,0 +1,288 @@
+.legendItem {
+  min-width: 2rem;
+  min-height: 2rem;
+}
+
+.step {
+  padding-bottom: 50vh;
+  min-height: 120vh;
+}
+
+.step.active {
+  opacity: 0.95;
+}
+
+// ...but not on a ranked area, where that 0.95 is actively harmful.
+//
+// Any opacity below 1 makes the step a stacking context, which traps the
+// z-index of the .area-section inside it. The step the reader is entering is
+// the active one, so its section stops counting at page level exactly when the
+// one it is replacing — no longer active, back to opacity 1 — still does. The
+// departing panel therefore paints OVER the arriving one and ghosts through
+// it, half-faded and shrinking, while the new panel slides up underneath to
+// the very place the ghost is sitting. Read as one image, that is the hiccup:
+// the map appears to slip and recover at every hand-over, at any scroll speed,
+// going down. The dimming is meant for a text card over the globe; a
+// full-bleed section has nothing to dim against.
+.step.step-stage.active {
+  opacity: 1;
+}
+
+// Stage chapters (galleries, plain text/image) don't need the same tall
+// scroll runway as a map chapter — give them a shorter, tighter footprint.
+.step.step-stage {
+  padding-bottom: 0;
+  min-height: 70vh;
+}
+
+// Wide screens: close the chapters up.
+//
+// The runway above is there for the phone, where the globe is full-bleed
+// BEHIND the copy and the gap between two cards is the only place it can be
+// seen. From the breakpoint up the globe sits beside the copy instead, so that
+// runway is just half a screen of empty paper between every pair of
+// paragraphs. A hairline carries the break instead.
+@media (min-width: 1000px) {
+  .step--card:not(.step--display) {
+    padding-bottom: 0;
+    min-height: auto;
+  }
+
+  // The hairline is the whole break, so nothing else may add to it. The band's
+  // own padding sits on both sides of the seam, and the step carried a runway
+  // below that: a quarter of a screen above the line against 2.4rem below it,
+  // which reads as a gap with a line lost in it rather than as a rule between
+  // two paragraphs. Closed on both cards of a pair only — a card that ends a
+  // run, with a globe or a display beat after it, still needs its own foot.
+  .step--card:has(+ .step--card) > .chapter-card { padding-bottom: 0; }
+  .step--card + .step--card > .chapter-card { padding-top: 0; }
+
+  // And the last paragraph's own trailing space, which would otherwise push
+  // the line down by a line's worth on one side only.
+  .step--card:has(+ .step--card) .chapter-copy > :last-child {
+    margin-bottom: 0;
+  }
+
+  .step--card + .step--card > .chapter-card > .chapter-card__inner::before {
+    content: '';
+    display: block;
+    width: 8rem;                          // adjust separator width
+    height: 1px;
+    margin: 2.4rem auto;                  // adjust air around the separator
+    background: #d8d2c6;                  // adjust separator colour
+  }
+
+  // The display beat still gets a screen of its own — that is the device —
+  // but not a screen and a half.
+  .step--card.step--display,
+  .step--card.step--display > .chapter-card {
+    min-height: 78vh;                     // adjust the display beat's height
+  }
+
+  // The globe's own screen. It is budgeted by the reveal and fade windows in
+  // config (120px in, 480 held, 300 out, measured from this chapter's top), so
+  // the tail beyond that was blank paper with the globe already gone.
+  .step.step--globe-only {
+    min-height: 110vh;                    // adjust the globe beat's dwell
+  }
+}
+
+.step.step--tight {
+  min-height: auto;
+  padding-bottom: 10vh;
+}
+
+.m-left-chapter {
+  margin-left: 5vw;
+}
+
+.m-right-chapter {
+  margin-right: 5vw;
+}
+// Copy revealed line by line (see use-line-split.js). It starts hidden so the
+// unsplit block never flashes before the split runs; the hook sets opacity to 1
+// once the fonts have settled, including when it bails out of animating.
+.split-lines {
+  opacity: 0;
+}
+
+.split-lines .line,
+.split-lines .line * {
+  will-change: transform;
+}
+
+// A full-bleed band of paper has to be opaque: the template's active/inactive
+// fade would let the globe show straight through it, which reads as a bug
+// rather than as a transition. These chapters sit out that fade entirely.
+.step.step--card,
+.step.step--card.active {
+  opacity: 1;
+}
+
+// Chapters that read over the globe need their own ground — #222 copy on the
+// globe's dark ocean is unreadable. A band of the page's own paper, edge to
+// edge, so it reads as an interlude in the story rather than a panel floating
+// on the map. Square corners: a full-bleed band has no corners to round.
+.chapter-card {
+  background-color: #f7f4ee;              // adjust band tone
+  background-image: url('../../assets/paper-grain.jpg');
+  background-size: 256px 256px;           // matches the grain scale on <body>
+  padding: 2.5rem 0;                      // adjust band depth
+}
+
+// The band is full width; the copy inside it is not.
+.chapter-card__inner {
+  max-width: 46rem;                       // adjust reading width
+  margin: 0 auto;
+  padding: 0 1.5rem;                      // keeps copy off the edge when narrow
+}
+
+// Matched to the intro subheading at 18/28, rather than the 16/24 the rest of
+// the template uses. Selector is deliberately specific so it beats the
+// Tailwind text-base / leading-6 utilities on the element itself.
+.chapter-card .chapter-card__inner p {
+  font-size: 1.125rem;                    // adjust intro chapter text size
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .chapter-card { padding: 2rem 0; }
+}
+
+// Paragraph rhythm inside the copy block. The template's space-y-4 only
+// reaches direct children, and the paragraphs arrive as innerHTML.
+.chapter-copy p {
+  margin: 0 0 1.15em;                     // adjust paragraph spacing
+}
+
+.chapter-copy p:last-child {
+  margin-bottom: 0;
+}
+
+// The two strands of the analysis, set as a list rather than run together in
+// a sentence. Sits tight under its lead-in line, which already carries the
+// paragraph's own bottom margin.
+.chapter-copy .chapter-list {
+  margin: -0.5em 0 1.15em;                // adjust list spacing
+  padding-left: 1.35em;                   // adjust bullet indent
+  list-style: disc;
+}
+
+.chapter-copy .chapter-list li {
+  margin-bottom: 0.3em;
+}
+
+.chapter-copy .chapter-list li::marker {
+  color: var(--ink-mute);                 // adjust bullet colour
+}
+
+.chapter-copy .chapter-list li:last-child {
+  margin-bottom: 0;
+}
+
+// Wide screens: the copy gives up the full-bleed band and takes the left
+// column, because the globe is now sitting in the right one. The band would
+// cover it edge to edge.
+@media (min-width: 1000px) {
+  .chapter-card {
+    background: none;
+    padding: 4rem 0;                      // adjust space between chapters
+  }
+
+  .chapter-card__inner {
+    margin: 0 0 0 6vw;                    // adjust left inset
+    max-width: min(38rem, 41vw);          // adjust reading width
+    padding: 0;
+  }
+}
+
+// The hand-off chapter. It has no globe beside it, so it takes the whole
+// column and says plainly what the countdown below is counting — set large
+// and centred so a reader arriving at "#10" already knows what it ranks.
+//
+// One screen, with the line held in the middle of it. The tall runway the
+// other chapters use is there to give the globe room to move through; with no
+// globe to drive, it would only strand this line at the top of an empty
+// screen. Flex here is safe where it is not on the story container: nothing
+// inside this chapter is pinned, so no pin-spacer can appear under it.
+.step--display {
+  min-height: 100vh;
+  padding-bottom: 0;
+}
+
+// The centring lives on the card, not on the step. The step also holds
+// react-waypoint's own element, so making IT the flex container gives two
+// flex items — and with both at width:100% they shrink to half the width
+// each, which parks the copy in the right-hand half of the screen.
+.step--display > .chapter-card {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  // the globe arrives from underneath as this line leaves; the line stays on
+  // top of it rather than being washed out by it
+  position: relative;
+  z-index: 2;
+}
+.chapter-card__inner--display {
+  text-align: center;
+}
+
+// The closing hand-off carries a heading as well as a line; the one that
+// opened the countdown is a line on its own. Set in the display face a step
+// above the copy, so it reads as the section's name without becoming a second
+// headline competing with the title at the top of the piece.
+.chapter-card__inner--display .chapter-copy .display-head {
+  margin: 0 0 0.5em;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.1vw, 2.6rem);  // adjust closing heading size
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.chapter-card__inner--display .chapter-copy p {
+  font-size: clamp(1.25rem, 2.4vw, 2rem);   // adjust hand-off text size
+  line-height: 1.35;
+  font-weight: 400;
+}
+
+@media (min-width: 1000px) {
+  // overrides the left inset the globe chapters use: nothing sits beside this
+  // one, so it centres on the page instead
+  .chapter-card__inner--display {
+    margin: 0 auto;
+    max-width: min(52rem, 78vw);            // adjust hand-off measure
+    padding: 0 1.5rem;
+  }
+}
+
+// Narrow screens give the globe a chapter of its own. It cannot be moved into
+// the flow — there is one Mapbox canvas, fixed behind the page — but the copy
+// rides on an opaque paper band, so lengthening the run-out after each band
+// leaves a clear screen with nothing but the globe and its caption on it. The
+// reader gets text, then the globe whole, then the next text.
+//
+// Wide screens do not want this: the globe is beside the copy there, already
+// in full view, and the extra run-out would only be dead scroll.
+@media (max-width: 999px) {
+  .step--card {
+    padding-bottom: 100vh;                // adjust the globe's screen height
+  }
+
+  // except the hand-off chapter, which has no globe to show after it
+  .step--card.step--display {
+    padding-bottom: 0;
+  }
+}
+
+// A chapter that carries no copy at all — one screen of scroll whose only job
+// is to give the globe room to be looked at. The card is hidden rather than
+// left empty so it does not draw its paper band over the globe on narrow
+// screens, where that band is what normally hides it.
+.step--globe-only {
+  min-height: 130vh;                       // adjust the globe beat's dwell
+  padding-bottom: 0;
+}
+
+.step--globe-only .chapter-card {
+  display: none;
+}

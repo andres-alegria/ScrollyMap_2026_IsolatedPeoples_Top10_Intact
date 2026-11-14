@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #03755e;
+  --text-2xl: 2rem;
+  --border-width-0\.75: 0.75px;
+}
+
+body {
+  margin: 0;
+  /* the one text face, defined with the other role tokens in app.scss */
+  font-family: var(--font-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
