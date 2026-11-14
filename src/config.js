@@ -333,5 +333,175 @@ export default {
       onChapterExit: [],
     },
 
+    // Top 8
+    {
+      id: 'Top 8',
+      type: 'stage',
+      stage: 'AreaReveal',
+      // Camera only, no layer changes: as this section climbs over the
+      // globe the camera dives in and settles on the first territory, while
+      // the globe is fading out across the same stretch. The move is glimpsed
+      // rather than watched, which reads as the story taking over.
+      globe: {
+        center: [-72.55156, -10.12390],
+        legend: 'Indigenous and protected lands with confirmed presence of isolated peoples',
+        zoom: 5,                             // adjust closing zoom depth
+        pitch: 45,                           // adjust closing tilt
+        bearing: -25,                        // adjust closing rotation
+        start: 'top bottom', end: 'top top',
+      },
+      areaId: 8,
+      eager: true,
+      panels: {
+        region: '/panels/08_murunahua_region.webp',
+        interior: '/panels/08_murunahua_interior.webp',
+      },
+      scale: { n: 20, kmFrac: 0.1231, miFrac: 0.1981 },
+      locator: [-72.551561, -10.123897],
+      adm1: 'Ucayali',
+      country: 'Peru',
+      rank: '#8',
+      title: 'Murunahua Indigenous Reserve',
+      menuName: 'Murunahua',
+      description: "<p>Home to the Chitonahua (murunahua), Maschco Piro and Amahuaca, this 470,305-hectare (1,162,147-acre) reserve in Peru lost <b>173 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 2,698.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and shifting cultivation</li></ul>",
+    },
+    // Top 7
+    {
+      id: 'Top 7',
+      type: 'stage',
+      stage: 'AreaReveal',
+      areaId: 7,
+      panels: {
+        region: '/panels/07_kichwa_region.webp',
+        interior: '/panels/07_kichwa_interior.webp',
+      },
+      scale: { n: 10, kmFrac: 0.1279, miFrac: 0.2058 },
+      locator: [-76.597254, -1.561798],
+      adm1: 'Pastaza',
+      country: 'Ecuador',
+      rank: '#7',
+      title: 'Kichwa Curaray Morete Playa Ancestral Community',
+      menuName: 'Kichwa Curaray',
+      description: "<p>Home to the Tagaeri and Taromenane, this 53,016-hectare (131,005-acre) community land in Ecuador lost <b>19 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 2,810.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and shifting cultivation</li></ul>",
+    },
+    // Top 6
+    {
+      id: 'Top 6',
+      type: 'stage',
+      stage: 'AreaReveal',
+      areaId: 6,
+      panels: {
+        region: '/panels/06_pucacuro_region.webp',
+        interior: '/panels/06_pucacuro_interior.webp',
+      },
+      scale: { n: 50, kmFrac: 0.1777, miFrac: 0.2861 },
+      locator: [-75.329147, -2.438491],
+      adm1: 'Loreto',
+      country: 'Peru',
+      rank: '#6',
+      title: 'Pucacuro National Reserve',
+      menuName: 'Pucacuro',
+      description: "<p>This 637,953-hectare (1,576,414-acre) reserve in Peru lost <b>179 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 3,542.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Logging, other natural disturbances and shifting cultivation</li></ul>",
+    },
+    // Top 5
+    {
+      id: 'Top 5',
+      type: 'stage',
+      stage: 'AreaReveal',
+      areaId: 5,
+      panels: {
+        region: '/panels/05_alto_purus_region.webp',
+        interior: '/panels/05_alto_purus_interior.webp',
+      },
+      scale: { n: 50, kmFrac: 0.1376, miFrac: 0.2215 },
+      locator: [-71.544136, -10.762818],
+      adm1: 'Ucayali',
+      country: 'Peru',
+      rank: '#5',
+      title: 'Alto Purús National Park',
+      menuName: 'Alto Purús',
+      description: "<p>Home to the Mashco Piro, Curanjeño Chitonahua and Mastanahua, this 2,510,694-hectare (6,204,050-acre) park in Peru lost <b>681 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 3,643.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and permanent agriculture</li></ul>",
+    },
+    // Top 4
+    {
+      id: 'Top 4',
+      type: 'stage',
+      stage: 'AreaReveal',
+      areaId: 4,
+      panels: {
+        region: '/panels/04_purus_region.webp',
+        interior: '/panels/04_purus_interior.webp',
+      },
+      scale: { n: 25, kmFrac: 0.1348, miFrac: 0.2169 },
+      locator: [-71.155236, -10.224041],
+      adm1: 'Ucayali',
+      country: 'Peru',
+      rank: '#4',
+      title: 'Purús Communal Reserve',
+      menuName: 'Purús',
+      description: "<p>Home to the Mashco Piro, this 202,033-hectare (499,234-acre) reserve in Peru lost <b>54 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 3,665.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and shifting cultivation</li></ul>",
+    },
+    // Top 3
+    {
+      id: 'Top 3',
+      type: 'stage',
+      stage: 'AreaReveal',
+      areaId: 3,
+      panels: {
+        region: '/panels/03_mamoria_region.webp',
+        interior: '/panels/03_mamoria_interior.webp',
+      },
+      scale: { n: 25, kmFrac: 0.1481, miFrac: 0.2384 },
+      locator: [-66.52104, -7.290541],
+      adm1: 'Amazonas',
+      country: 'Brazil',
+      rank: '#3',
+      title: 'Mamoriá Grande Indigenous Territory',
+      menuName: 'Mamoriá Grande',
+      description: "<p>Home to the Isolados do Mamoriá Grande, this 259,783-hectare (641,937-acre) territory in Brazil lost <b>57 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 4,526.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Logging, other natural disturbances and wildfire</li><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> 8 hectares</li></ul>",
+    },
+    // Top 2
+    {
+      id: 'Top 2',
+      type: 'stage',
+      stage: 'AreaReveal',
+      areaId: 2,
+      panels: {
+        region: '/panels/02_chandless_region.webp',
+        interior: '/panels/02_chandless_interior.webp',
+      },
+      scale: { n: 50, kmFrac: 0.2304, miFrac: 0.3708 },
+      locator: [-70.363689, -10.021331],
+      adm1: 'Acre',
+      country: 'Brazil',
+      rank: '#2',
+      title: 'Mashco do Rio Chandless Indigenous Territory',
+      menuName: 'Chandless',
+      description: "<p>Home to the Mashco Isolados do Rio Chandless, this 538,338-hectare (1,330,260-acre) territory in Brazil lost <b>68 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 7,585.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and permanent agriculture</li></ul>",
+    },
+    // Top 1
+    {
+      id: 'Top 1',
+      type: 'stage',
+      stage: 'AreaReveal',
+      areaId: 1,
+      panels: {
+        region: '/panels/01_sentinel_region.webp',
+        interior: '/panels/01_sentinel_interior.webp',
+      },
+      scale: { n: 5, kmFrac: 0.1827, miFrac: 0.2941 },
+      locator: [92.240531, 11.556794],
+      // The one section that fades out completely rather than to 0.45: it
+      // gives way to a text card a screen tall, and anything still showing
+      // above that reads as a mistake rather than as a crossfade.
+      timings: { fade: 1, recedeTo: 0.9 },
+      adm1: 'Andaman and Nicobar Islands',
+      country: 'India',
+      rank: '#1',
+      title: 'North Sentinel Island Tribal Reserve',
+      menuName: 'North Sentinel',
+      description: "<p>Home to the Sentinelese people, this 5,967-hectare (14,745-acre) reserve in India recorded <b>no primary forest loss at all</b> between 2015 and 2025.</p>",
+    },
+
   ],
 };
