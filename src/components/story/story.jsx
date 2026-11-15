@@ -27,15 +27,23 @@ const Story = ({ title, subtitle, byline, theme, chapters, alignment, currentCha
       {/* Full width, not 90%: every chapter inside either centres its own
           content or caps its own measure, so the outer inset only stopped
           full-bleed chapters from reaching the edge of the screen. */}
-      {/* Jump bar for the ranked areas, in config order (#10 first). Fixed
-          positioning, so where it sits in the DOM only affects stacking. */}
+      {/* Jump bar for the ranked areas, in config order. Fixed positioning, so
+          where it sits in the DOM only affects stacking.
+
+          The two chapter ids are this piece's, not the loss piece's, and they
+          do not correspond. There, chapter 06 is the held map that ends the
+          introduction and chapter 07 is the world map AFTER the countdown, so
+          `hideAt` puts the bar away once the ranking is over. Here the held map
+          is chapter 07 and nothing follows the countdown, so the same pair of
+          ids would raise the bar for one screen and then hide it for the whole
+          ranking — which is what it did. The bar now rises as the held map
+          leaves and stays up to the end. */}
       <AreaMenu
         items={(chapters || [])
           .filter((c) => c.areaId && c.id)
           .map((c) => ({ id: c.id, rank: c.rank, title: c.title,
                          menuName: c.menuName, country: c.country }))}
-        showAfter="chapter 06"
-        hideAt="chapter 07"
+        showAfter="chapter 07"
       />
 
       <div id="features" className="w-full block">

@@ -37,9 +37,10 @@
      panel's own top edge, so the recede shrinks the card around the image
      instead of dragging it downwards. See the note in AreaReveal.jsx. */
   transform-origin: 50% 14%;
-  /* Above the globe. On wide screens .map-container stacks normally rather
-     than behind the page (a WebKit compositing case, see app.scss), so a
-     centred globe would otherwise show through the ranked sections. */
+  /* Above the standing map, which is fixed and so is not ordered by flow.
+     It sits at -5 and would stay under these sections regardless; this is
+     kept because it cost a bug to learn the first time, when the map behind
+     them was a WebGL canvas that stacked over the page. */
   z-index: 1;
   /* No will-change here on purpose. It used to sit on all ten sections at
      once, holding ten full-viewport compositor layers for the whole page.
@@ -188,11 +189,28 @@
   }
 
   /* A phone has to fit the whole section in one screen, and the rank and the
-     place line were the first things to be cropped off the top. Both are
-     available elsewhere — the rank in the jump bar fixed above, the place in
-     the locator globe on the panel — so the title keeps only the name. */
-  .area-section__rank { display: none; }
+     place line were the first things to be cropped off the top.
+
+     The place line is genuinely repeated elsewhere — the locator globe on the
+     panel says where this is — so it goes. The rank is not: it is the one
+     thing the section cannot be read without, since the whole piece is a
+     countdown. Dropping it left a phone reader with no number at all. It
+     stays, moved onto the name's line and down to the name's size, which
+     costs no height at all where the two fit together and one line where they
+     do not. */
   .area-section__place { display: none; }
+
+  .area-section__title {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.4em;                                    /* adjust rank-to-name gap */
+  }
+
+  .area-section__rank {
+    font-size: var(--fs-name);
+  }
 
   /* stacked: frame, then the indicator and paragraph beneath it */
   .area-section__body { flex-direction: column; align-items: center; gap: 1.4vh; }
