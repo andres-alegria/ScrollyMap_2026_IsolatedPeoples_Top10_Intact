@@ -12,10 +12,10 @@
   background-size: 256px 256px;
   max-height: 100vh;
 
-  // The globe is fixed and no longer sits behind the page: on wide screens it
-  // stacks normally so Safari will composite its WebGL canvas (see
-  // .map-container in app.scss). Without a z-index here it would show through
-  // the intro.
+  // The standing map is fixed, and fixed elements outrank the page's own flow
+  // whatever their order. This keeps the intro over it. The map sits at -5 and
+  // would stay under the intro anyway; the belt is cheap and the braces were
+  // paid for once already, by a WebGL globe that did stack over this.
   //
   // z-index only — no position. This element is already absolutely positioned
   // (Tailwind's `absolute`, see intro-component.jsx) and so takes no space in

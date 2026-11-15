@@ -1,11 +1,8 @@
-const { VITE_MAPBOX_ACCESS_TOKEN } = import.meta.env;
-
+// No Mapbox style and no access token: the introduction's map is drawn from
+// geometry now (see src/components/standing-map), and nothing else in the
+// piece ever used the live map. The ranked sections were always images, and
+// the small locator on each panel is its own SVG.
 export default {
-  style: 'mapbox://styles/mongabay/cmtalpr3p00j901shfgl9bjk0',
-  
-  accessToken: VITE_MAPBOX_ACCESS_TOKEN,
-
-  showMarkers: false,
   theme: 'mongabay',
   intro: {
     // PLACEHOLDER title — mine, not the desk's. The docx heading, "Top 10
@@ -70,61 +67,21 @@ export default {
   ],
 
 
+  // The standing map fades in under the first chapter and leaves at the
+  // countdown. Between those two it does not move at all — see
+  // src/components/standing-map/standing-map.jsx for why.
+  mapReveal: { trigger: 'chapter 01', start: 'top bottom', end: 'top 70%' },
 
-  // Globe atmosphere. space-color is matched to the paper texture in
-  // src/assets/background-image.jpg so the sphere reads as sitting on the
-  // page rather than floating in Mapbox's default starfield.
-  // The globe leaves and comes back. It goes out across chapter five's bottom
-  // edge, so the hand-off line in chapter six has the screen to itself, then
-  // returns for chapter seven — bigger and centred — to show the ranked lands
-  // on their own. Shown that way it is a beat the reader stops at, rather than
-  // something that dissolves under a headline just as it arrives.
-  // NOTE ON THE CHAPTER NUMBERS BELOW. This piece carries one prose chapter
-  // more than the loss piece does — chapter 05, the one that holds the 0.03%
-  // and the Central Park comparison — so every trigger here sits one number
-  // later than its counterpart there: last prose chapter 05, hand-off line 06,
-  // the held globe 07. Copying a trigger across from the loss piece without
-  // moving it on by one fires it a whole chapter early, which does not error:
-  // it quietly raises the big centred globe underneath the hand-off line and
-  // leaves that line's charcoal text sitting unreadable on a black sphere.
-  globeWindows: [
-    { reveal: { trigger: 'chapter 01', start: 'top bottom', end: 'top 75%' },
-      // Out a little earlier than the default would take it. The finale frame
-      // is switched on a screen before chapter 07, and the globe has to be
-      // gone by then: the frame resize is a jump in the sphere's size, and the
-      // reader should not be looking at the globe when it happens.
-      fadeOut: { trigger: 'chapter 05', start: 'bottom center', end: 'bottom 25%' } },
-    // Rises behind the hand-off line rather than after it: by the time that
-    // line's card starts leaving, the globe is already there, and the card
-    // slides off over a finished picture instead of a fading one.
-    //
-    // Both ends are measured from chapter 07's own top so they cannot collide.
-    // They used to be read from opposite edges — the reveal from the top, the
-    // fade-out from the bottom — and the fade began fifteen pixels before the
-    // reveal finished, which capped the globe at four fifths: it never once
-    // reached full strength.
-    { reveal: { trigger: 'chapter 07', start: 'top 90%', end: 'top 55%' },
-      fadeOut: { trigger: 'chapter 07', start: 'top top-=600', end: 'top top-=900' } },
-  ],
-
-  // Which chapter gets the larger centred frame (see .map-container--finale).
-  // Switched on in the gap between the first globe's fade-out and the second's
-  // rise, with margin either side: the frame resize is a jump in the sphere's
-  // size, so it has to happen while nothing is on screen to see it.
-  globeFinale: { trigger: 'chapter 07', start: 'top 95%' },
-
-  globeAtmosphere: {
-    // mapbox-gl creates its WebGL context with alpha:true, so a transparent
-    // space-color lets the page's paper texture show through around the globe
-    // instead of a flat colour. If this renders black on some browser, fall
-    // back to the paper tone: '#f7f4ee'.
-    'space-color': 'rgba(0, 0, 0, 0)',
-    'star-intensity': 0,                      // no stars
-    'horizon-blend': 0.02,                    // adjust: softness at the limb
-    'color': 'rgba(247, 244, 238, 0)',
-    'high-color': 'rgba(223, 230, 238, 0.35)', // adjust: faint limb glow
+  // The hand-over. Across the held chapter the map scales toward the middle
+  // of the ranked lands and fades out, which is the move the globe's camera
+  // used to make as it dove onto the first territory: glimpsed rather than
+  // watched, so it reads as the story taking over.
+  mapHandover: {
+    trigger: 'chapter 07',
+    start: 'top 55%',                  // adjust when the map starts leaving
+    end: 'bottom top',                 // adjust when it has gone
+    scale: 4,                          // adjust how far it pushes in
   },
-
 
   // The legend beneath each panel.
   panelLabels: {
@@ -178,29 +135,20 @@ export default {
     // chapter 01 — set scene
     {
       id: 'chapter 01',
-      // Opens where the copy opens: New Guinea. No dots yet — this chapter is
-      // one forest, not the dataset. The island carries no ranked land (the
-      // assessment could not include it), so there is no focus mark either.
-      //
-      // Zooms describe a proportion of the globe's frame, not a pixel size:
-      // useGlobeSequence adds log2(frameWidth / 440) before applying them, so
-      // the sphere fills the same fraction of the frame at every width.
-      globe: {
-        center: [138.0, -4.2], zoom: 1.08,
-        start: 'top bottom', end: 'top 70%',
-        legend: 'The forests of New Guinea',
-        layers: { centroids: 0, 'centroids-label': 0, 'centroids top 10': 0,
-                  'ranked-ten': 0, 'chapter-focus': 0 },
+      // Opens where the copy opens: New Guinea. No dots — this chapter is one
+      // forest, not the dataset, and the island carries no mapped land at all.
+      map: {
+        heading: 'The forests of New Guinea',
+        // No dot: the 101 mapped lands run from 77W to Halmahera at 128E and
+        // not one of them is on New Guinea. What the opening describes is the
+        // forest, so the map frames the island and leaves it at that.
+        region: 'new-guinea',
       },
       alignment: 'fully',
       card: true,
       hidden: false,
       title: ' ',
       description: "<p>Towers of Western New Guinea kauri (<i>Agathis labillardieri</i>) burst beyond the forest ceiling, their buttresses wide and old among the other endemic tree species crowding primary forests in Indonesian Papua.</p><p>Uncontacted tribes protect these forests through traditional ways of living in harmony with nature, said Dorince Mehue, a campaigner of the Papua region for the Indigenous Peoples’ Alliance of the Archipelago (AMAN). She estimates there are two to 10 tribes in West Papua’s forests, located in the Indonesian half of the island of New Guinea, who live in voluntary isolation.</p><p>“For them, the forest is their home, their food source, and a sacred space that must be protected for their survival,” Mehue told Mongabay.</p>",
-      // No `location` here on purpose. The camera for these chapters belongs
-      // to `globe` above, and only to that — see the note kept in the loss
-      // piece about the two cameras taking turns.
-      mapAnimation: 'easeTo',
       onChapterEnter: [],
       onChapterExit: [],
     },
@@ -211,19 +159,15 @@ export default {
       // One continuous eastward turn out of New Guinea, across the Pacific, to
       // the Amazon: the two forest blocks this paragraph names, in the order
       // it names them, so the reader sees the spread rather than being told.
-      globe: {
-        center: [-62.0, -6.0], zoom: 1.08, spin: 'east',
-        start: 'top bottom-=10%', end: 'top 25%',
-        legend: 'Indigenous and protected lands worldwide',
-        layers: { centroids: 0.9, 'centroids-label': 0, 'centroids top 10': 0,
-                  'ranked-ten': 0, 'chapter-focus': 0 },
+      map: {
+        heading: 'Indigenous and protected lands worldwide',
+        region: 'world',
       },
       alignment: 'fully',
       card: true,
       hidden: false,
       title: ' ',
       description: "<p>Around the world, there are an estimated <b>200 groups</b> of people living in voluntary isolation (also known as uncontacted people) and initial contact, like those in West Papua. Many of them inhabit large, intact tropical forest landscapes, similar to ones in New Guinea and the Amazon, where primary forests are also concentrated. The expanding pressures on these forests through logging, mining, roads and agriculture threatens the survival of these communities, researchers say.</p><p>“The [uncontacted tribes’] belief that damaging nature will bring curses or disasters to the community serves as a natural protection that is strictly adhered to,” Mehue explained. In New Guinea, they implement customary prohibitions, like Sasi “on harvesting certain natural resources for a set period of time to allow the ecosystem to recover … For them, the forest is not simply a resource to be exploited, but a sacred space and a ‘mother’ that provides all their needs.”</p>",
-      mapAnimation: 'flyTo',
       rotateAnimation: false,
       onChapterEnter: [],
       onChapterExit: [],
@@ -232,19 +176,15 @@ export default {
     // chapter 03 — method
     {
       id: 'chapter 03',
-      globe: {
-        center: [-60.0, -10.0], zoom: 1.08,
-        start: 'top bottom-=10%', end: 'top 25%',
-        legend: 'Indigenous and protected lands in South America',
-        layers: { centroids: 0.9, 'centroids-label': 0, 'centroids top 10': 0,
-                  'ranked-ten': 0, 'chapter-focus': 0 },
+      map: {
+        heading: 'Indigenous and protected lands in South America',
+        region: 'south-america',
       },
       alignment: 'fully',
       card: true,
       hidden: false,
       title: ' ',
       description: "<p>Mongabay mapped the Indigenous territories, tribal reserves and protected areas around the world with the confirmed presence of peoples living in voluntary isolation and analyzed primary forest cover in the decade from 2015 to 2025. This assessment, using public data, exists to give a general sense of the state of forests in the protected lands uncontacted peoples depend on.</p><p>Based on these figures, we ranked the <b>10 lands in tropical humid forests with the lowest detected primary forest loss</b> between 2015 and 2025.</p><p>Using data provided by national organizations, the international working group on Indigenous Peoples in Isolation and Initial Contact (GTI PIACI) and Indigenous experts on the confirmed presence of uncontacted people, Mongabay overlapped it with Indigenous and protected lands and assembled a list of <b>65 defined lands</b> where they live. These exist across nine countries — Bolivia, Brazil, Colombia, Ecuador, India, Indonesia, Paraguay, Peru and Venezuela.</p><p>Among these, 56 lands are located in tropical moist broadleaf forests. This assessment does not showcase the exact or unique location of isolated peoples but rather the boundaries of Indigenous and protected lands their presence overlaps with.</p>",
-      mapAnimation: 'flyTo',
       rotateAnimation: false,
       onChapterEnter: [],
       onChapterExit: [],
@@ -253,19 +193,15 @@ export default {
     // chapter 04 — the whole dataset, in numbers
     {
       id: 'chapter 04',
-      globe: {
-        center: [-68.0, -5.0], zoom: 1.08,
-        start: 'top bottom-=10%', end: 'top 25%',
-        legend: 'Indigenous and protected lands in South America',
-        layers: { centroids: 0.9, 'centroids-label': 0, 'centroids top 10': 0,
-                  'ranked-ten': 0, 'chapter-focus': 0 },
+      map: {
+        heading: 'Indigenous and protected lands in South America',
+        region: 'south-america',
       },
       alignment: 'fully',
       card: true,
       hidden: false,
       title: ' ',
       description: "<p>At the turn of the millennia, all 65 lands had a tree cover of more than <b>72.38 million hectares</b> (178.85 million acres) — almost the size of Chile. Satellite data in 2001 shows 59.35 million hectares (146.7 million acres) of this was primary forest.</p><p>Between 2015 and 2025, these lands lost a total of nearly 2 million hectares (4.94 million acres). Of this, nearly 568,150 hectares (1.4 million acres) was primary forest loss — roughly the size of Montenegro.</p><p>According to the Food and Agriculture Organization (FAO), primary forests covered at least 1.18 billion hectares (2.92 billion acres) of the Earth in 2025.</p>",
-      mapAnimation: 'flyTo',
       rotateAnimation: false,
       onChapterEnter: [],
       onChapterExit: [],
@@ -274,12 +210,9 @@ export default {
     // chapter 05 — the two ends of the list against each other
     {
       id: 'chapter 05',
-      globe: {
-        center: [-72.0, -7.0], zoom: 1.08,
-        start: 'top bottom-=10%', end: 'top 25%',
-        legend: 'Indigenous and protected lands in South America',
-        layers: { centroids: 0.9, 'centroids-label': 0, 'centroids top 10': 0,
-                  'ranked-ten': 0, 'chapter-focus': 0 },
+      map: {
+        heading: 'Indigenous and protected lands in South America',
+        region: 'south-america',
       },
       alignment: 'fully',
       card: true,
@@ -292,7 +225,6 @@ export default {
       // Purús alone is 681. The "less than half of Central Park" comparison
       // stands or falls with it. Flagged, not silently corrected.
       description: "<p>The top 10 lands in tropical humid forests with the most intact primary forests between 2015 and 2025 had an average rate of primary forest loss of just <b>0.03%</b>, compared to an average rate of 3.6% in the top 10 lands with the most primary forest loss — approximately 120 times larger.</p><p>These 10 lands lost a total of approximately 137.7 hectares (340.3 acres) of primary forest in the 10-year period — less than half the size of New York City’s Central Park.</p><p>Management strategy isn’t necessarily the reason why some lands have higher primary forest loss than others, explained researchers. It also has to do with which lands face more threats.</p><p>Some of these primary forests are intact because of remote geography and strict government restrictions, such as the North Sentinel Island in India. While others, so far, remain far from extractive pressures and have Indigenous guardians patrolling the lands.</p>",
-      mapAnimation: 'flyTo',
       rotateAnimation: false,
       onChapterEnter: [],
       onChapterExit: [],
@@ -311,30 +243,30 @@ export default {
       onChapterExit: [],
     },
 
-    // chapter 07 — the globe held still, so the ranked set can be read
+    // chapter 07 — the screen the map gets to itself
     {
       id: 'chapter 07',
-      // No copy: one screen whose only job is to hold the globe still long
-      // enough to be read. The camera has already moved here while hidden.
-      //
-      // Centred on the western Amazon, where seven of the eight sit. North
-      // Sentinel is most of a hemisphere away and is not in this view — the
-      // countdown arrives at it as the climax, which is the better place for
-      // the reader to meet it.
-      globe: {
-        center: [-72.0, -6.0], zoom: 1.18,
-        start: 'top bottom', end: 'top 80%',
-        // PENDING THE NEW TILESETS. `ranked-ten` and `centroids top 10` in
-        // the shared Mapbox style are still the loss piece's ten lands, so
-        // drawing them here would put the wrong ten under a caption claiming
-        // these. Until the intact tilesets are published this beat shows the
-        // 101 mapped lands, which is true of both stories, and says so.
-        // Then: centroids 0, 'ranked-ten' 0.9, and the caption below.
-        legend: 'Indigenous and protected lands with confirmed presence of isolated peoples',
-        layers: { centroids: 0.9, 'centroids-label': 0, 'centroids top 10': 0,
-                  'ranked-ten': 0, 'chapter-focus': 0 },
+      // No copy: one screen whose only job is to leave the map alone long
+      // enough to be read, and then to carry the hand-over into the
+      // countdown. It used to be the beat where a flying camera finally came
+      // to rest; the map never moved in the first place, so what it holds now
+      // is the reader's attention rather than the globe's position.
+      map: {
+        heading: 'Indigenous and protected lands with confirmed presence of isolated peoples',
+        // Every mapped land, which is what this caption says and what both
+        // stories share.
+        //
+        // The ranked set is now drawn from this piece's own data rather than
+        // from the shared Mapbox style — `region: 'ranked'` lights the eight
+        // the countdown goes on to show, and nothing has to be uploaded for
+        // it. It is not switched on because the heading above would have to
+        // change with it, and the copy still says ten while eight are built.
+        region: 'world',
       },
       alignment: 'fully',
+      // Still named for the globe it no longer holds: the flag means "this
+      // chapter is the map and nothing else", which is as true of the one as
+      // it was of the other.
       globeOnly: true,
       hidden: false,
       onChapterEnter: [],
@@ -346,17 +278,12 @@ export default {
       id: 'Top 8',
       type: 'stage',
       stage: 'AreaReveal',
-      // Camera only, no layer changes: as this section climbs over the
-      // globe the camera dives in and settles on the first territory, while
-      // the globe is fading out across the same stretch. The move is glimpsed
-      // rather than watched, which reads as the story taking over.
-      globe: {
-        center: [-72.55156, -10.12390],
-        legend: 'Indigenous and protected lands with confirmed presence of isolated peoples',
-        zoom: 5,                             // adjust closing zoom depth
-        pitch: 45,                           // adjust closing tilt
-        bearing: -25,                        // adjust closing rotation
-        start: 'top bottom', end: 'top top',
+      map: {
+        // The hand-over itself is `mapHandover` at the top of this file: one
+        // window, rather than a camera move written into the section that
+        // happens to be climbing over the map at the time.
+        heading: '',
+        region: 'ranked',
       },
       areaId: 8,
       eager: true,

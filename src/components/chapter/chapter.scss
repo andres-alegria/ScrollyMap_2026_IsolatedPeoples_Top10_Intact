@@ -119,14 +119,14 @@
   opacity: 1;
 }
 
-// Chapters that read over the globe need their own ground — #222 copy on the
-// globe's dark ocean is unreadable. A band of the page's own paper, edge to
-// edge, so it reads as an interlude in the story rather than a panel floating
-// on the map. Square corners: a full-bleed band has no corners to round.
+// These chapters used to carry a full-bleed band of the page's own paper,
+// because #222 copy on the globe's dark ocean could not be read. The globe is
+// gone and the map that replaced it is paler than the copy by a wide margin,
+// so the ground is no longer needed — and on a phone, where the band ran edge
+// to edge, it was covering almost the whole map it was protecting the reader
+// from. The copy now sits straight on the map, which is what it already did
+// on wide screens.
 .chapter-card {
-  background-color: #f7f4ee;              // adjust band tone
-  background-image: url('../../assets/paper-grain.jpg');
-  background-size: 256px 256px;           // matches the grain scale on <body>
   padding: 2.5rem 0;                      // adjust band depth
 }
 
@@ -180,12 +180,9 @@
   margin-bottom: 0;
 }
 
-// Wide screens: the copy gives up the full-bleed band and takes the left
-// column, because the globe is now sitting in the right one. The band would
-// cover it edge to edge.
+// Wide screens: the copy takes the left column rather than the full width.
 @media (min-width: 1000px) {
   .chapter-card {
-    background: none;
     padding: 4rem 0;                      // adjust space between chapters
   }
 

@@ -8,11 +8,8 @@ afterEach(cleanup);
 describe('App', () => {
   it('renders without crashing', () => {
     const props = {
-      chapters: [{ id: 'first-id', location: { center: [0, 0] } }],
-      accessToken: '',
-      style: '',
+      chapters: [{ id: 'first-id' }],
       theme: '',
-      showMarkers: false,
       title: '',
       subtitle: '',
       byline: '',

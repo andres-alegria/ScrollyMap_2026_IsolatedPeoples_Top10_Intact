@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './app.scss';
 import Story from './components/story/story';
-import Map from './components/map/map';
+import StandingMap from './components/standing-map/standing-map';
 import Intro from './components/intro/intro';
 import Logos from './components/logos/logos';
 import ReadingProgress from './components/reading-progress/reading-progress';
@@ -9,19 +9,15 @@ import ReadingProgress from './components/reading-progress/reading-progress';
 const App = (props) => {
   const {
     chapters,
-    accessToken,
-    style,
     theme,
-    showMarkers,
     title,
     subtitle,
     byline,
     footer,
     intro,
     logos,
-    globeAtmosphere,
-    globeWindows,
-    globeFinale,
+    mapReveal,
+    mapHandover,
     credits,
     panelLabels,
   } = props;
@@ -29,17 +25,11 @@ const App = (props) => {
   const [currentAction, setCurrentAction] = useState();
 
 
-  const renderError = (missing) => (
-    <div className="flex justify-center items-center h-screen">
-      Please add the missing {missing}. Check the Readme
-    </div>
-  );
-  if (style === 'ADD YOUR MAPBOX STYLE HERE') {
-    return renderError('Mapbox map style');
-  }
-  if (!accessToken) {
-    return renderError('Mapbox access token');
-  }
+  // The Mapbox style and token checks that used to stand here are gone with
+  // the map they guarded. Nothing in the piece talks to Mapbox any more: the
+  // introduction's map is drawn from geometry, the ranked sections are
+  // images, and the locator on each panel is its own SVG. A missing token
+  // used to blank the whole story; now there is no token to miss.
 
   return (
     <div>
@@ -62,16 +52,10 @@ const App = (props) => {
         setCurrentAction={setCurrentAction}
         panelLabels={panelLabels}
       />
-      <Map
+      <StandingMap
         chapters={chapters}
-        currentAction={currentAction}
-        accessToken={accessToken}
-        mapStyle={style}
-        showMarkers={showMarkers}
-        currentChapterId={currentChapterId}
-        globeAtmosphere={globeAtmosphere}
-        globeWindows={globeWindows}
-        globeFinale={globeFinale}
+        mapReveal={mapReveal}
+        mapHandover={mapHandover}
       />
     </div>
   );
