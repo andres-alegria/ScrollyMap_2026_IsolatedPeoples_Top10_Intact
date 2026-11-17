@@ -97,10 +97,10 @@ export default {
     // stops a reader taking the pale ground of the second beat for cleared
     // land rather than for ground the panel is simply no longer lit on.
     beats: [
-      { label: 'Tree cover lost since 2015',
+      { label: 'Tree cover lost since 2015 up to 2025',
         color: '#e86d6d', textColor: '#181818' },          /* adjust loss box + text */
       // Pine Green — the colour the panels paint forest with
-      { label: 'Primary forest inside the boundary',
+      { label: 'Forest inside the area',
         color: '#0a2f29', textColor: '#ffffff' },          /* adjust interior box + text */
     ],
     // the label that has not been reached yet, as plain text with no box
