@@ -83,7 +83,15 @@ export default {
 
   // It arrives with the chapter that hands the story over, not at the start:
   // the first three maps have already had their say by then.
-  mapReveal: { trigger: 'chapter 06', start: 'top 80%', end: 'top 35%' },
+  //
+  // It has to be ALL the way in before any of that chapter's copy is on
+  // screen. The paper band the map brings with it is what hides the copy that
+  // scrolls down into it, and the band fades in with the map — so while the
+  // map was still arriving the band was translucent and the hand-off line
+  // could be read straight through it, greyed, lying across the middle of the
+  // world. Measured: chapter 06's copy reaches the top of the band at scroll
+  // 4320 and enters the screen at about 3870, and this window closes at 3605.
+  mapReveal: { trigger: 'chapter 06', start: 'top bottom', end: 'top 75%' },
 
   // The hand-over. Across the held chapter the map scales toward the middle of
   // the lands and fades out, which is the move the globe's camera used to make
