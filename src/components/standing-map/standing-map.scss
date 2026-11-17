@@ -22,9 +22,15 @@
   position: relative;
   width: var(--map-w);
   margin: 0 auto;
-  // Above the copy and the ranked sections, which it grows over as it goes.
-  // Under the furniture — reading progress is 20, the jump bar 50.
-  z-index: 6;
+  // BEHIND the countdown. The ranked sections sit at 1, so this has to stay
+  // under that or the map — which is still fading as the first of them
+  // arrives — paints its pale ground straight over the panel and its copy.
+  // It was at 6 from when it was fixed and had to cover the text scrolling
+  // past it; nothing scrolls past it any more.
+  //
+  // Zero rather than auto, so it still goes over the page's own ground and
+  // under the hand-off line's card, which is at 2.
+  z-index: 0;
   pointer-events: none;
 }
 
