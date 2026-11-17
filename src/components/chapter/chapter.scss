@@ -81,7 +81,7 @@
   // but not a screen and a half.
   .step--card.step--display,
   .step--card.step--display > .chapter-card {
-    min-height: 78vh;                     // adjust the display beat's height
+    min-height: 58.5vh;                   // adjust the display beat's height
   }
 
   // The map's own screen. It is budgeted by the reveal and fade windows in
@@ -211,7 +211,7 @@
 // screen. Flex here is safe where it is not on the story container: nothing
 // inside this chapter is pinned, so no pin-spacer can appear under it.
 .step--display {
-  min-height: 100vh;
+  min-height: 75vh;                       // adjust the hand-off beat's height
   padding-bottom: 0;
 }
 
@@ -219,8 +219,11 @@
 // react-waypoint's own element, so making IT the flex container gives two
 // flex items — and with both at width:100% they shrink to half the width
 // each, which parks the copy in the right-hand half of the screen.
+// The card and the step carry the same height. Shrinking only the card would
+// leave the difference as empty paper below it, since the step is what holds
+// the scroll runway.
 .step--display > .chapter-card {
-  min-height: 100vh;
+  min-height: 75vh;                       // keep in step with .step--display
   display: flex;
   align-items: center;
   // the globe arrives from underneath as this line leaves; the line stays on
