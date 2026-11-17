@@ -57,6 +57,16 @@
 }
 
 // Above the collage, which is z-index 0 inside the same stacking context.
+// The cover is position:absolute, so it contributes no height and the story's
+// own clearance (.withIntro in story.scss) decides where the first chapter
+// starts. What its box height does decide is how far down the page it reaches:
+// the template's .step gives it 120vh against one screen of content, so its
+// empty lower fifth used to hang over the top of the first chapter. Matched to
+// what is actually in it.
+.intro.step {
+  min-height: 100vh;
+}
+
 .intro__content {
   position: relative;
   z-index: 1;

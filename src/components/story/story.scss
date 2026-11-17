@@ -4,8 +4,14 @@
   height: 100%;
 }
 
+// Clearance for the cover, which is position:absolute and so contributes no
+// height of its own. It is one screen tall, so anything past about 100vh here
+// is empty paper between the title and the first paragraph — and the copy now
+// fades out above the map, so the reader crosses an empty stretch at half
+// speed and half a screen of it read as the piece having stalled. Enough left
+// for the cover to scroll clear and a breath after it.
 .withIntro {
-  padding-top: 150vh;
+  padding-top: 112vh;                     // adjust the gap after the cover
 }
 
 .withIntro #features {

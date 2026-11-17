@@ -35,43 +35,48 @@
   min-height: 70vh;
 }
 
-// Wide screens: close the chapters up.
+// Close the chapters up, at every width.
 //
-// The runway above is there for the phone, where the globe is full-bleed
-// BEHIND the copy and the gap between two cards is the only place it can be
-// seen. From the breakpoint up the globe sits beside the copy instead, so that
-// runway is just half a screen of empty paper between every pair of
-// paragraphs. A hairline carries the break instead.
+// The half-screen runway `.step` carries was there for the phone, where the
+// globe used to sit full-bleed BEHIND the copy and the gap between two cards
+// was the only place it could be seen. No globe, no reason: the map stands at
+// the foot of the screen now and is in view the whole time, so that runway was
+// only half a screen of empty paper between every pair of paragraphs — and
+// with the copy fading out above the map, the reading window is the top half
+// of the screen, which doubles how long an empty stretch takes to cross.
+//
+// A hairline carries the break instead. It used to be a wide-screen rule for
+// the same dead reason, so a narrow screen got the gap and no line at all.
+.step--card:not(.step--display) {
+  padding-bottom: 0;
+  min-height: auto;
+}
+
+// The hairline is the whole break, so nothing else may add to it. The band's
+// own padding sits on both sides of the seam, and the step carried a runway
+// below that: a quarter of a screen above the line against 2.4rem below it,
+// which reads as a gap with a line lost in it rather than as a rule between
+// two paragraphs. Closed on both cards of a pair only — a card that ends a
+// run, with a map or a display beat after it, still needs its own foot.
+.step--card:has(+ .step--card) > .chapter-card { padding-bottom: 0; }
+.step--card + .step--card > .chapter-card { padding-top: 0; }
+
+// And the last paragraph's own trailing space, which would otherwise push
+// the line down by a line's worth on one side only.
+.step--card:has(+ .step--card) .chapter-copy > :last-child {
+  margin-bottom: 0;
+}
+
+.step--card + .step--card > .chapter-card > .chapter-card__inner::before {
+  content: '';
+  display: block;
+  width: 8rem;                            // adjust separator width
+  height: 1px;
+  margin: 2.4rem auto;                    // adjust air around the separator
+  background: #d8d2c6;                    // adjust separator colour
+}
+
 @media (min-width: 1000px) {
-  .step--card:not(.step--display) {
-    padding-bottom: 0;
-    min-height: auto;
-  }
-
-  // The hairline is the whole break, so nothing else may add to it. The band's
-  // own padding sits on both sides of the seam, and the step carried a runway
-  // below that: a quarter of a screen above the line against 2.4rem below it,
-  // which reads as a gap with a line lost in it rather than as a rule between
-  // two paragraphs. Closed on both cards of a pair only — a card that ends a
-  // run, with a globe or a display beat after it, still needs its own foot.
-  .step--card:has(+ .step--card) > .chapter-card { padding-bottom: 0; }
-  .step--card + .step--card > .chapter-card { padding-top: 0; }
-
-  // And the last paragraph's own trailing space, which would otherwise push
-  // the line down by a line's worth on one side only.
-  .step--card:has(+ .step--card) .chapter-copy > :last-child {
-    margin-bottom: 0;
-  }
-
-  .step--card + .step--card > .chapter-card > .chapter-card__inner::before {
-    content: '';
-    display: block;
-    width: 8rem;                          // adjust separator width
-    height: 1px;
-    margin: 2.4rem auto;                  // adjust air around the separator
-    background: #d8d2c6;                  // adjust separator colour
-  }
-
   // The display beat still gets a screen of its own — that is the device —
   // but not a screen and a half.
   .step--card.step--display,
@@ -79,11 +84,10 @@
     min-height: 78vh;                     // adjust the display beat's height
   }
 
-  // The globe's own screen. It is budgeted by the reveal and fade windows in
-  // config (120px in, 480 held, 300 out, measured from this chapter's top), so
-  // the tail beyond that was blank paper with the globe already gone.
+  // The map's own screen. It is budgeted by the reveal and fade windows in
+  // config, so the tail beyond that was blank paper with the map already gone.
   .step.step--globe-only {
-    min-height: 110vh;                    // adjust the globe beat's dwell
+    min-height: 110vh;                    // adjust the held beat's dwell
   }
 }
 
@@ -180,16 +184,20 @@
   margin-bottom: 0;
 }
 
-// Wide screens: the copy takes the left column rather than the full width.
+// Wide screens. The copy used to take the left column, because the globe sat
+// in the right one. The map that replaced it stands along the bottom of the
+// screen instead, so there is no column to leave free: the copy is centred and
+// runs much wider, and the map is kept clear by hiding the text over it rather
+// than by moving it aside.
 @media (min-width: 1000px) {
   .chapter-card {
     padding: 4rem 0;                      // adjust space between chapters
   }
 
   .chapter-card__inner {
-    margin: 0 0 0 6vw;                    // adjust left inset
-    max-width: min(38rem, 41vw);          // adjust reading width
-    padding: 0;
+    margin: 0 auto;
+    max-width: min(58rem, 86vw);          // adjust reading width
+    padding: 0 1.5rem;
   }
 }
 
