@@ -64,7 +64,10 @@ const StandingMap = ({ standingMap = {}, mapReveal, mapHandover }) => {
     }
 
     if (mapHandover && document.getElementById(mapHandover.trigger)) {
-      const [fx, fy] = WORLD.focusBetween || WORLD.focus;
+      // Named points are projected at build time from lon/lat, so the target
+      // can be checked against a map rather than against drawing units.
+      const [fx, fy] = (mapHandover.focus && WORLD.focusPoints?.[mapHandover.focus])
+        || WORLD.focusBetween || WORLD.focus;
       const common = {
         trigger: `#${CSS.escape(mapHandover.trigger)}`,
         start: mapHandover.start, end: mapHandover.end, scrub: true,
@@ -83,9 +86,11 @@ const StandingMap = ({ standingMap = {}, mapReveal, mapHandover }) => {
       // the fade is information (the map is leaving), the zoom is only the
       // manner of its leaving — and so is the frame letting go.
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        // svgOrigin needs the <svg> itself, so the scale goes on the drawing
-        // and the clip stays on the frame around it.
-        const art = frame.querySelector('.map-art');
+        // svgOrigin is in SVG user units, so it has to be applied to a group
+        // INSIDE the svg. On the root <svg> the transform is a CSS one in CSS
+        // pixels and the origin lands off the drawing entirely — which sent
+        // the camera north-west, over North America, instead of to its target.
+        const art = frame.querySelector('.map-art__camera');
         if (!art) return undefined;
         const tw = gsap.to(art, {
           scale: mapHandover.scale ?? 4, ease: 'none',

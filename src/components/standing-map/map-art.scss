@@ -47,29 +47,19 @@
   vector-effect: non-scaling-stroke;
 }
 
-// The one saturated mark on the map. The paper ring is what keeps a crowd of
-// them legible: the western Amazon holds eighty of these inside a few hundred
-// kilometres, and without the ring they merge into a single blot.
+// The one saturated mark on the map.
+//
+// Only the fill is set here. The radius, the ring and its width are attributes
+// on the element, set in map-art.jsx — `r` as a CSS property is a Blink and
+// Gecko feature, and WebKit drops it, which left every dot at the default
+// radius of nought in Safari.
 .map-art__dots circle {
-  r: 8.5;                              // adjust dot size
   fill: #006a54;                       // adjust dot colour
-  stroke: #f7f4ee;                     // adjust dot ring
-  stroke-width: 2.6;
   vector-effect: non-scaling-stroke;
 }
 
 @media (max-width: 999px) {
-  // A phone draws the map at about a third the width, so the dots need to come
-  // up to stay visible — but only so far. The paper ring that separates them
-  // on a wide screen is what breaks first: enlarged to match, eighty rings
-  // inside the width of the Amazon stop being eighty rings and fuse into one
-  // pale blot, which reads as a hole punched through South America. So the
-  // ring goes and the dot stays small. Overlapping green on green still reads
-  // as a crowd, which is what the cluster is.
-  .map-art__dots circle {
-    r: 9;                              // adjust dot size on phones
-    stroke: none;
-  }
-
+  // The dots' own narrow-screen values live beside the wide ones in
+  // map-art.jsx, because they have to be attributes — see above.
   .map-art__box { stroke-width: 3; }
 }

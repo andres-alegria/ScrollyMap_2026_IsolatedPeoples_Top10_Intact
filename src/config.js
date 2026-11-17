@@ -105,6 +105,11 @@ export default {
     // viewport, which is what `top bottom` names.
     start: 'top bottom',               // adjust when the map starts leaving
     end: 'bottom top',                 // adjust when it has gone
+    // Where the camera ends up, by name. The points are declared as lon/lat in
+    // build_world_robinson.py and projected there, so this can be read against
+    // an atlas: `mediterranean` is 15E 38N. Aiming between the South American
+    // and the Asian lands put it on the equator in the Gulf of Guinea instead.
+    focus: 'mediterranean',            // adjust the closing camera target
     scale: 4,                          // adjust how far it pushes in
     // The fraction of that window at which the frame stops clipping. Zero: the
     // whole move is unclipped, so the map grows out of its box and off the
