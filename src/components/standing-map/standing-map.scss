@@ -12,7 +12,7 @@
   // Sized from its height so it keeps the same presence on any screen, then
   // capped by width so it cannot run off a phone. 2.4312 is the drawing's own
   // ratio (2000 x 823) — change it only if the crop in the build script does.
-  --map-w: min(96vw, 1360px, calc(52vh * 2.4312));   // adjust map size
+  --map-w: min(92vw, 1180px, calc(45vh * 2.4312));   // adjust map size
   --map-ratio: 2.4312;
 
   position: fixed;
@@ -24,9 +24,12 @@
   transform: translateX(-50%);
   width: var(--map-w);
   height: calc(var(--map-w) / var(--map-ratio));
-  // Behind the copy, above the page's paper. The copy has no ground of its
-  // own, so this cannot be a positive layer.
-  z-index: -5;
+  // ABOVE the copy, not behind it. The copy is centred and full width now, so
+  // it runs straight across the map; rather than move the text aside, the map
+  // brings its own ground up with it (the band below) and the copy disappears
+  // into that ground as it scrolls down to it. Kept under the furniture —
+  // reading progress is 20, the jump bar 50.
+  z-index: 6;
   pointer-events: none;
   opacity: 0;                          // the reveal window brings it in
 }
@@ -34,13 +37,46 @@
 // The layer that leaves at the hand-over. It exists only so that the two
 // scrubbed windows — fading in under chapter one, fading out into the
 // countdown — are never both writing opacity on the same element.
+//
+// The band is on this layer rather than on the root for the same reason: it
+// has to go when the map goes. Left on the root, whose opacity the reveal
+// window pins at 1 for the rest of the page, it would still be masking the
+// bottom of the screen all the way down the countdown.
 .standing-map__leaving {
   width: 100%;
   height: 100%;
 }
 
+// The ground the map stands on, and what the copy scrolling down to it
+// disappears into.
+//
+// Full-bleed, from a little above the heading to the foot of the screen. It is
+// the page's own paper and grain, so it is invisible as a surface; what it
+// does is stop the copy before it reaches the map. The top edge is masked to a
+// soft fade rather than a cut, so a line of text dissolves on the way down
+// instead of being sliced off mid-stroke.
+.standing-map__leaving::before {
+  content: '';
+  position: absolute;
+  left: -100vw;                        // wider than the map box, to full bleed
+  right: -100vw;
+  bottom: -2.5vh;                      // matches the map's lift off the edge
+  top: -5.5rem;                        // adjust where the copy starts to go
+  background-color: #f7f4ee;           // adjust band tone, matches the page
+  background-image: url('../../assets/paper-grain.jpg');
+  background-size: 256px 256px;        // matches the grain scale on <body>
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 2.75rem);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 2.75rem);
+}
+
 .standing-map__svg {
   display: block;
+  // Positioned so it paints over the band. The band is an absolutely
+  // positioned pseudo-element, and a positioned box outranks a static one
+  // whatever the source order — without this the paper covers the map and
+  // leaves nothing on screen but its heading.
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   // The scale at the hand-over pushes the ranked lands past the frame; without
@@ -120,23 +156,15 @@
   // Generous top and bottom: the copy scrolls through this band continuously,
   // so the plate needs visible air inside it or the heading reads as jammed
   // between two lines of body text rather than as sitting in front of them.
-  padding: 0.85rem 1rem 0.9rem;        // adjust plate depth
-  // Full width, fading only at the very edges. It was inset at first, so that
-  // the plate hugged its own words — and the line of copy it was standing on
-  // carried on straight through the clear margins either side, which is the
-  // collision the plate exists to prevent. It has to cross whatever it
-  // crosses. The fade is what keeps that from reading as a bar ruled across
-  // the page.
-  background: linear-gradient(to right,
-    rgba(247, 244, 238, 0) 0%,
-    rgba(247, 244, 238, 0.96) 7%,
-    rgba(247, 244, 238, 0.96) 93%,
-    rgba(247, 244, 238, 0) 100%);      // adjust heading plate
+  // No plate of its own any more. It used to carry a paper gradient because
+  // the copy crossed it; the band behind the whole map does that job now, and
+  // the heading simply sits on it.
+  padding: 0.5rem 1rem 0.65rem;        // adjust heading spacing
 }
 
 @media (max-width: 999px) {
   .standing-map {
-    --map-w: min(100vw, calc(34vh * 2.4312));   // adjust map size on phones
+    --map-w: min(96vw, calc(30vh * 2.4312));    // adjust map size on phones
   }
 
   .standing-map__heading {
