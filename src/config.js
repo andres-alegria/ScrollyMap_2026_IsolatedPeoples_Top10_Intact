@@ -26,22 +26,32 @@ export default {
     //   width     as % of viewport width; height follows the file's aspect
     //   onMobile  include in the top strip on narrow screens
     art: [
-      { src: '/intro-art/people-water.webp', left: '0%', top: '10%', width: '24.3%', onMobile: true },
-      { src: '/intro-art/house.webp', left: '0%', top: '34%', width: '24.3%', onMobile: true },
+      { src: '/intro-art/yasuni-canopy.webp', left: '0%', top: '10%', width: '24.3%', onMobile: true },
+      { src: '/intro-art/acre-forest.webp', left: '0%', top: '34%', width: '24.3%' },
       // Flush to the left edge (the file has no transparent gutter), and lifted
       // clear of the social icons, which start at 90.8% of the viewport. That
       // lift means it no longer centres exactly on the "scroll down to
       // discover" cue at 78.7% — it now sits a little above it. Sized by
       // height so its vertical placement holds as the window reshapes.
-      // Listed after `house` so it stacks above the piece immediately overhead.
+      // Listed after the forest piece so it stacks above the one overhead.
       { src: '/intro-art/earth-left.webp', left: '0%', top: '60.5%', height: '28.2%' },
-      { src: '/intro-art/closeupface.webp', left: '74.4%', top: '5%', width: '12.6%', onMobile: true },
-      { src: '/intro-art/man.webp', left: '88.3%', top: '5%', width: '11.7%' },
-      // Directly below `man`, which ends at 13.8%. Anchored right so it stays
-      // flush to the edge at any viewport shape.
+      // Tucked against the right edge of the map, below the standfirst. Small
+      // and low: at 1024 px the standfirst reaches further left than it does
+      // on a wide screen, and a bigger piece here ends up touching it.
+      { src: '/intro-art/massaco-nets.webp', left: '13%', top: '66%', width: '9.5%' },
+      // The middle piece of the phone strip, which is the one that matters.
+      // That strip is a centred flex row at 24vh with its overflow cut off, so
+      // what survives is whatever sits at the middle of the row: at 390 px the
+      // three mobile pieces come to 894 and the window falls on 252-642, which
+      // is this one entire, with a slice of forest before it and most of the
+      // canoe after. Ordering here is therefore composition, not just stacking.
+      { src: '/intro-art/machiguenga-girl.webp', left: '74.4%', top: '5%', width: '12.6%', onMobile: true },
+      { src: '/intro-art/jaguar.webp', left: '88.3%', top: '5%', width: '11.7%' },
+      // Directly below the jaguar strip, which ends at 10.6%. Anchored right
+      // so it stays flush to the edge at any viewport shape.
       { src: '/intro-art/earth-right.webp', right: '0%', top: '16%', height: '28.2%' },
-      { src: '/intro-art/topview-peopleforests.webp', left: '79.3%', top: '46%', width: '20.7%' },
-      { src: '/intro-art/people-topview.webp', left: '75.7%', top: '70%', width: '24.3%' },
+      { src: '/intro-art/javari-river.webp', left: '79.3%', top: '46%', width: '20.7%' },
+      { src: '/intro-art/canoe-group.webp', left: '75.7%', top: '70%', width: '24.3%', onMobile: true },
     ],
 
     social: [
