@@ -7,84 +7,49 @@ import './standing-map.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// How far above the foot of the screen the map locks, as a fraction of the
-// viewport's height. The band of paper behind it reaches exactly this far
-// below its bottom edge (`bottom: -2.5vh` in the scss), so the two have to
-// agree or the band stops short of the screen's edge.
-const LOCK_VH = 0.025;
-
 /**
  * The last of the four maps.
  *
  * It arrives the way the other three do — in the flow of the story, directly
- * after the paragraph it belongs to, rising with the copy. What makes it
- * different is that it stops: when its bottom edge reaches the foot of the
- * screen it locks there, and from that point the story scrolls on behind it
- * while it pushes toward the Mediterranean and leaves.
+ * after the paragraph it belongs to — and it never stops. What makes it
+ * different is that it works while it travels: from the moment its foot
+ * reaches the foot of the screen it pushes toward the Mediterranean and fades,
+ * and it finishes as it leaves the top.
  *
- * Sticky rather than fixed, and the difference is the whole point. A fixed map
- * is in that position from the moment it exists, so it has to be faded in, and
- * the copy that passes it has to be hidden behind a band of paper on the way.
- * A sticky one simply flows until it reaches the place it is going to hold,
- * which is what a reader expects of a figure — and the fade-in and the
- * collisions it caused go with it.
- *
- * The runway is the element's own container, because that is what sticky
- * measures against: the map stays locked for the container's height less its
- * own. Everything that moves is keyed off the moment it locks.
+ * It did hold still for a stretch, locked to the bottom by `position: sticky`.
+ * That cost a runway of empty page to hold the lock in, and the reader crossed
+ * it between the end of the introduction and the first ranked land. Moving
+ * through the zoom instead buys the same stretch of motion out of travel the
+ * map was going to do anyway.
  *
  * Config:
  *
- *   chapter.map   { sticky: true, heading, region, runway }
- *   mapHandover   scale, focus — how it leaves, once it has locked
+ *   chapter.map   { sticky: true, heading, region }
+ *   mapHandover   scale, focus — how it leaves
  */
-const StandingMap = ({ heading = '', region = 'world', runway, mapHandover = {} }) => {
+const StandingMap = ({ heading = '', region = 'world', mapHandover = {} }) => {
   const { t } = useTranslation();
-  const runwayRef = useRef(null);
-  const stickyRef = useRef(null);
+  const rootRef = useRef(null);
   const leaveRef = useRef(null);
   const frameRef = useRef(null);
 
   const label = heading ? t(heading) : '';
 
   useEffect(() => {
-    const track = runwayRef.current;
-    const sticky = stickyRef.current;
+    const root = rootRef.current;
     const leaving = leaveRef.current;
     const frame = frameRef.current;
-    if (!track || !sticky || !leaving || !frame) return undefined;
+    if (!root || !leaving || !frame) return undefined;
 
-    // Where it locks: its bottom edge this far above the foot of the screen.
-    const offset = () => window.innerHeight * LOCK_VH;
-
-    // `top`, not `bottom`.
-    //
-    // A bottom inset is the mirror of a top one: it holds a box from falling
-    // BELOW a line, which pins it while the reader scrolls up. It does nothing
-    // on the way down, so with `bottom: 2.5vh` the map simply flowed past and
-    // off the top of the screen. What locks a box on the way down is `top` —
-    // and the top it has to be given is the screen's height less its own and
-    // the offset, which is only knowable once it has been laid out. Hence
-    // JavaScript, re-run whenever the window changes.
-    const place = () => {
-      const top = window.innerHeight - sticky.offsetHeight - offset();
-      sticky.style.setProperty('--map-lock', `${Math.round(top)}px`);
-    };
-    place();
-    window.addEventListener('resize', place);
-
-    // The lock point, for the motion. Measured against the runway, whose
-    // position stays honest — the sticky box's own rectangle stops moving once
-    // it has locked, so reading that would give the same number for ever after.
-    const lockPoint = () => `top bottom-=${Math.round(sticky.offsetHeight + offset())}`;
-
+    // The whole move, measured against the map's own box as it goes past:
+    // from its foot arriving at the foot of the screen to its foot leaving the
+    // top. That is one screen of scroll, and the map is travelling for every
+    // pixel of it — which is the point. Nothing here is a position, so there
+    // is no empty page to hold one in.
     const common = {
-      trigger: track,
-      start: lockPoint,
-      // Gone by the time the runway runs out, which is also the moment sticky
-      // lets go — so it never comes unstuck in view.
-      endTrigger: track,
-      end: 'bottom bottom',
+      trigger: root,
+      start: 'bottom bottom',
+      end: 'bottom top',
       scrub: true,
     };
 
@@ -108,37 +73,26 @@ const StandingMap = ({ heading = '', region = 'world', runway, mapHandover = {} 
         scale: mapHandover.scale ?? 4, ease: 'none',
         svgOrigin: `${fx} ${fy}`, scrollTrigger: { ...common },
       });
-
       return () => { tw.scrollTrigger?.kill(); };
     });
 
-    const refresh = ScrollTrigger.addEventListener('refreshInit', place);
-
     return () => {
-      window.removeEventListener('resize', place);
-      ScrollTrigger.removeEventListener('refreshInit', place);
       fade.scrollTrigger?.kill();
       mm.revert();
     };
   }, [mapHandover]);
 
   return (
-    <div
-      className="standing-map__runway"
-      ref={runwayRef}
-      style={runway ? { height: runway } : undefined}
-    >
-      <div className="standing-map" ref={stickyRef}>
-        <div className="standing-map__leaving" ref={leaveRef}>
-          {/* Type, not an SVG label: it has to wrap on a phone, be read by a
-              screen reader and be translated with the rest of the piece. */}
-          {label && <p className="standing-map__heading">{label}</p>}
+    <div className="standing-map" ref={rootRef}>
+      <div className="standing-map__leaving" ref={leaveRef}>
+        {/* Type, not an SVG label: it has to wrap on a phone, be read by a
+            screen reader and be translated with the rest of the piece. */}
+        {label && <p className="standing-map__heading">{label}</p>}
 
-          {/* Nothing clips the map: it grows out of this box and off the
-              screen. The scale is applied to a group inside the svg. */}
-          <div className="standing-map__frame" ref={frameRef}>
-            <MapArt region={region} label={label} />
-          </div>
+        {/* Nothing clips the map: it grows out of this box and off the
+            screen. The scale is applied to a group inside the svg. */}
+        <div className="standing-map__frame" ref={frameRef}>
+          <MapArt region={region} label={label} />
         </div>
       </div>
     </div>

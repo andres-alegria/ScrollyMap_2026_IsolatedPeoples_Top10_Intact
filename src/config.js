@@ -69,10 +69,9 @@ export default {
   // plain figures: they hold still and scroll away with the paragraph that
   // introduced them.
   //
-  // The fourth carries `sticky: true`. It arrives the same way, but when its
-  // bottom edge reaches the foot of the screen it locks there and the story
-  // scrolls on behind it while it leaves. `runway` is how long it holds — the
-  // lock lasts that height less the map's own.
+  // The fourth carries `sticky: true`, which is now only a flag for "this is
+  // the one that moves". It arrives the same way as the others and keeps
+  // going; what it does differently is zoom and fade on its way off the top.
 
   // How the fourth map leaves, once it has locked. It has no trigger of its
   // own any more: the move starts at the lock and ends as the runway runs out,
@@ -263,7 +262,6 @@ export default {
         // Nothing here needs changing when they land: the region is built from
         // the panel list, so it becomes ten on the next run of the renderer.
         region: 'ranked',
-        runway: '175vh',               // adjust how long the map holds
       },
       onChapterEnter: [],
       onChapterExit: [],

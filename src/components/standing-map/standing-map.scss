@@ -5,13 +5,6 @@
 // scrolls on behind it. The drawing itself is in map-art.scss, shared with the
 // three that only ever sit in the flow.
 
-// The runway is what sticky measures against: the map holds its lock for this
-// height less its own, so this is the length of the hand-over.
-.standing-map__runway {
-  position: relative;
-  height: 175vh;                       // adjust how long the map holds
-}
-
 .standing-map {
   // Sized from the viewport's height so it keeps the same presence on any
   // screen, then capped by width so it cannot run off a phone. 2.4312 is the
@@ -20,20 +13,17 @@
   --map-w: min(92vw, 1180px, calc(45vh * 2.4312));   // adjust map size
   --map-ratio: 2.4312;
 
-  // Sticky, not fixed. It travels with the copy until its bottom edge reaches
-  // the foot of the screen and then holds there.
-  //
-  // The inset is `top`, and it is set from JavaScript (see LOCK_VH in
-  // standing-map.jsx). A bottom inset would be the mirror of what is wanted —
-  // it holds a box from falling below a line, which pins it on the way UP and
-  // does nothing on the way down. The top it needs is the screen's height less
-  // its own, which is only knowable after layout.
-  position: sticky;
-  top: var(--map-lock, auto);
+  // In flow, and it stays in flow. It used to lock to the foot of the screen
+  // with `position: sticky`, which needed a runway of empty page to hold the
+  // lock in — and the reader crossed that runway between the end of the
+  // introduction and the first ranked land. It travels through the zoom now
+  // instead, which buys the same stretch of motion out of movement it was
+  // going to do anyway.
+  position: relative;
   width: var(--map-w);
   margin: 0 auto;
-  // Above the ranked sections, which rise behind it while it is leaving, and
-  // under the furniture — reading progress is 20, the jump bar 50.
+  // Above the copy and the ranked sections, which it grows over as it goes.
+  // Under the furniture — reading progress is 20, the jump bar 50.
   z-index: 6;
   pointer-events: none;
 }
@@ -54,7 +44,7 @@
   left: -100vw;                        // wider than the map, to full bleed
   right: -100vw;
   top: -1.75rem;                       // adjust the paper above the heading
-  bottom: -2.5vh;                      // down to the foot of the screen, locked
+  bottom: -1.75rem;                    // and below it
   background-color: #f7f4ee;           // adjust band tone, matches the page
   background-image: url('../../assets/paper-grain.jpg');
   background-size: 256px 256px;        // matches the grain scale on <body>
@@ -119,10 +109,6 @@
 @media (max-width: 999px) {
   .standing-map {
     --map-w: min(96vw, calc(30vh * 2.4312));    // adjust map size on phones
-  }
-
-  .standing-map__runway {
-    height: 150vh;                     // adjust the hold on phones
   }
 
   .standing-map__heading {
