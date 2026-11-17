@@ -1,12 +1,10 @@
-// The standing world map: a fixed stage along the bottom of the screen that
-// the introduction's copy scrolls up over.
-//
-// Everything here is quiet on purpose. A background that type crosses has to
-// be lighter than the type by a wide margin or the reader loses the line they
-// are on — which is exactly what went wrong with the dark globe this
-// replaces, where the hand-off line sat unreadable on a black sphere. Land is
-// a warm grey a shade off the paper, the graticule is barely there, and the
-// one saturated thing on the map is the dot.
+@use './map-art.scss';
+
+// The last of the four maps: a fixed stage along the foot of the screen that
+// the closing stretch of the introduction scrolls down to. The drawing itself
+// is in map-art.scss, shared with the three that sit in the flow of the story;
+// what is here is only the standing behaviour — where it sits, the paper it
+// brings with it, and the frame it breaks out of at the hand-over.
 
 .standing-map {
   // Sized from its height so it keeps the same presence on any screen, then
@@ -24,8 +22,8 @@
   transform: translateX(-50%);
   width: var(--map-w);
   height: calc(var(--map-w) / var(--map-ratio));
-  // ABOVE the copy, not behind it. The copy is centred and full width now, so
-  // it runs straight across the map; rather than move the text aside, the map
+  // ABOVE the copy, not behind it. The copy is centred and full width, so it
+  // runs straight across the map; rather than move the text aside, the map
   // brings its own ground up with it (the band below) and the copy disappears
   // into that ground as it scrolls down to it. Kept under the furniture —
   // reading progress is 20, the jump bar 50.
@@ -35,8 +33,8 @@
 }
 
 // The layer that leaves at the hand-over. It exists only so that the two
-// scrubbed windows — fading in under chapter one, fading out into the
-// countdown — are never both writing opacity on the same element.
+// scrubbed windows — fading in, and fading out into the countdown — are never
+// both writing opacity on the same element.
 //
 // The band is on this layer rather than on the root for the same reason: it
 // has to go when the map goes. Left on the root, whose opacity the reveal
@@ -69,8 +67,13 @@
   mask-image: linear-gradient(to bottom, transparent 0, #000 2.75rem);
 }
 
-.standing-map__svg {
-  display: block;
+// The frame the map is held in, and breaks out of.
+//
+// For most of the hand-over the zoom is clipped to this box, so the map grows
+// INTO its own window. Partway through, `is-unclipped` lets go and the last of
+// the move spills past the frame and off the screen — which is the point: the
+// reader is being taken through the map rather than shown it.
+.standing-map__frame {
   // Positioned so it paints over the band. The band is an absolutely
   // positioned pseudo-element, and a positioned box outranks a static one
   // whatever the source order — without this the paper covers the map and
@@ -79,64 +82,15 @@
   z-index: 1;
   width: 100%;
   height: 100%;
-  // The scale at the hand-over pushes the ranked lands past the frame; without
-  // this the map grows over the whole page instead of into its own window.
   overflow: hidden;
 }
 
-// The projected world's outline, filled so the oceans are a flat tone rather
-// than the page showing through — the map needs an edge or the continents
-// read as stains on the paper.
-.standing-map__edge {
-  fill: #f1efe8;                       // adjust sea tone
-  stroke: #ddd9ce;                     // adjust map edge
-  stroke-width: 2;
+.standing-map__frame.is-unclipped {
+  overflow: visible;
 }
 
-.standing-map__graticule {
-  fill: none;
-  stroke: #e2dece;                     // adjust graticule
-  stroke-width: 1.2;
-}
-
-.standing-map__land {
-  fill: #c6ccbe;                       // adjust land tone
-  stroke: #b0b7a7;                     // adjust coastline
-  stroke-width: 1;
-}
-
-// The bracket around the region a heading names. The wash is what makes it
-// carry at this size — an outline alone is a thin dashed rectangle on a busy
-// coastline, and on the opening chapter, where New Guinea holds no dot at
-// all, the bracket is the entire content of the map.
-.standing-map__box {
-  fill: rgba(0, 106, 84, 0.1);         // adjust region wash
-  stroke: #006a54;                     // adjust region outline
-  stroke-width: 3;
-  stroke-dasharray: 14 10;
-  vector-effect: non-scaling-stroke;
-}
-
-// The one saturated mark on the map. The paper ring is what keeps a crowd of
-// them legible: the western Amazon holds eighty of these inside a few hundred
-// kilometres, and without the ring they merge into a single blot.
-.standing-map__dots circle {
-  r: 8.5;                              // adjust dot size
-  fill: #006a54;                       // adjust dot colour
-  stroke: #f7f4ee;                     // adjust dot ring
-  stroke-width: 2.6;
-  vector-effect: non-scaling-stroke;
-}
-
-// Names what the map is showing, across its upper edge.
-//
-// It has to carry its own paper. The copy scrolls up through this band and
-// both are charcoal, so without a ground the two cross and neither can be
-// read — which is precisely the fault the dark globe had, where the hand-off
-// line ended up unreadable over the sphere. A plate only as wide as its own
-// words, rather than a full-width bar: it then masks the line of copy it is
-// actually standing on and no more, and it reads as a card laid on the map
-// rather than as a strip cut across the page.
+// Names what the map is showing, across its upper edge. It has no plate of its
+// own: the band behind the whole map is its ground.
 .standing-map__heading {
   position: absolute;
   left: 0;
@@ -145,20 +99,12 @@
   margin: 0;
   transform: translateY(-100%);        // adjust heading height above the map
   text-align: center;
-  opacity: 0;
 
   font-family: var(--font-text);
   font-size: 1.1875rem;                // adjust heading size
   font-weight: 600;
   line-height: 1.3;
   color: var(--ink);                   // adjust heading colour
-
-  // Generous top and bottom: the copy scrolls through this band continuously,
-  // so the plate needs visible air inside it or the heading reads as jammed
-  // between two lines of body text rather than as sitting in front of them.
-  // No plate of its own any more. It used to carry a paper gradient because
-  // the copy crossed it; the band behind the whole map does that job now, and
-  // the heading simply sits on it.
   padding: 0.5rem 1rem 0.65rem;        // adjust heading spacing
 }
 
@@ -171,18 +117,4 @@
     font-size: 1rem;                   // adjust heading size on phones
     padding: 0.4rem 1.2rem;
   }
-
-  // A phone draws the map at about a third the width, so the dots need to come
-  // up to stay visible — but only so far. The paper ring that separates them
-  // on a wide screen is what breaks first: enlarged to match, eighty rings
-  // inside the width of the Amazon stop being eighty rings and fuse into one
-  // pale blot, which reads as a hole punched through South America. So the
-  // ring goes and the dot stays small. Overlapping green on green still reads
-  // as a crowd, which is what the cluster is.
-  .standing-map__dots circle {
-    r: 9;                              // adjust dot size on phones
-    stroke: none;
-  }
-
-  .standing-map__box { stroke-width: 3; }
 }

@@ -16,6 +16,7 @@ const App = (props) => {
     footer,
     intro,
     logos,
+    standingMap,
     mapReveal,
     mapHandover,
     credits,
@@ -53,7 +54,7 @@ const App = (props) => {
         panelLabels={panelLabels}
       />
       <StandingMap
-        chapters={chapters}
+        standingMap={standingMap}
         mapReveal={mapReveal}
         mapHandover={mapHandover}
       />

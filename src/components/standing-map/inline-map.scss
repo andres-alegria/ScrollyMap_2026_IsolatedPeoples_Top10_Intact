@@ -1,0 +1,36 @@
+@use './map-art.scss';
+
+// A map in the flow of the story, under the paragraph it illustrates.
+//
+// It is a figure and behaves like one: it takes its own space, it holds still,
+// and it scrolls away with the copy above it. Nothing is fixed, nothing is
+// masked, and the copy never crosses it.
+.inline-map {
+  margin: 2.4rem auto 0;               // adjust space above the map
+  // Sized by width here rather than by height. These maps are read in passing
+  // on the way down the page, not held on screen, so they want to be smaller
+  // than the one that stands at the foot — and a figure in flow has no reason
+  // to be measured against the height of the window.
+  width: min(100%, 58rem);             // adjust map width
+  max-width: 100%;
+}
+
+.inline-map__heading {
+  margin: 0 0 0.55rem;                 // adjust heading to map gap
+  text-align: center;
+  font-family: var(--font-text);
+  font-size: 1.0625rem;                // adjust heading size
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);                   // adjust heading colour
+}
+
+@media (max-width: 999px) {
+  .inline-map {
+    margin-top: 1.8rem;
+  }
+
+  .inline-map__heading {
+    font-size: 0.9375rem;              // adjust heading size on phones
+  }
+}

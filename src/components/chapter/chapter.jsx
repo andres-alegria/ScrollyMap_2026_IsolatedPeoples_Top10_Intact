@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Waypoint } from 'react-waypoint';
 import LegendIcon from '../icons/legend-icon';
 import { STAGES } from "../stages/stage-registry";
+import InlineMap from '../standing-map/inline-map';
 import useLineSplit from './use-line-split';
 
 
@@ -95,6 +96,7 @@ function Chapter({
   card,
   displayText,
   globeOnly,
+  map,
   alignment,
   setCurrentChapter,
   setCurrentAction,
@@ -251,6 +253,12 @@ const StageComponent = isStage ? STAGES[stage] : null;
             />
           )}
         </div>
+      )}
+      {/* The map this paragraph is about, directly under it. Only the last of
+          the four stands at the foot of the screen; the rest are figures and
+          belong to the chapter that introduces them, which is here. */}
+      {map && map.inline && (
+        <InlineMap heading={map.heading} region={map.region} />
       )}
       {legend && renderLegend(legend, sources)}
       {image && renderImage({ src: image })}

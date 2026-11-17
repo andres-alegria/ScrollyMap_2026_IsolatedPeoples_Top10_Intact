@@ -1,0 +1,75 @@
+// The Robinson drawing itself, shared by the three maps in the flow of the
+// story and by the one standing at the foot of the screen.
+//
+// Everything here is quiet on purpose. One of these four has type crossing it,
+// and a ground that type crosses has to be lighter than the type by a wide
+// margin or the reader loses the line they are on — which is exactly what went
+// wrong with the dark globe this replaces, where the hand-off line sat
+// unreadable on a black sphere. Land is a warm grey a shade off the paper, the
+// graticule is barely there, and the one saturated thing on the map is the dot.
+
+.map-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// The projected world's outline, filled so the oceans are a flat tone rather
+// than the page showing through — the map needs an edge or the continents
+// read as stains on the paper.
+.map-art__edge {
+  fill: #f1efe8;                       // adjust sea tone
+  stroke: #ddd9ce;                     // adjust map edge
+  stroke-width: 2;
+}
+
+.map-art__graticule {
+  fill: none;
+  stroke: #e2dece;                     // adjust graticule
+  stroke-width: 1.2;
+}
+
+.map-art__land {
+  fill: #c6ccbe;                       // adjust land tone
+  stroke: #b0b7a7;                     // adjust coastline
+  stroke-width: 1;
+}
+
+// The bracket around the region a heading names. The wash is what makes it
+// carry at this size — an outline alone is a thin dashed rectangle on a busy
+// coastline, and on the opening chapter, where New Guinea holds no dot at
+// all, the bracket is the entire content of the map.
+.map-art__box {
+  fill: rgba(0, 106, 84, 0.1);         // adjust region wash
+  stroke: #006a54;                     // adjust region outline
+  stroke-width: 3;
+  stroke-dasharray: 14 10;
+  vector-effect: non-scaling-stroke;
+}
+
+// The one saturated mark on the map. The paper ring is what keeps a crowd of
+// them legible: the western Amazon holds eighty of these inside a few hundred
+// kilometres, and without the ring they merge into a single blot.
+.map-art__dots circle {
+  r: 8.5;                              // adjust dot size
+  fill: #006a54;                       // adjust dot colour
+  stroke: #f7f4ee;                     // adjust dot ring
+  stroke-width: 2.6;
+  vector-effect: non-scaling-stroke;
+}
+
+@media (max-width: 999px) {
+  // A phone draws the map at about a third the width, so the dots need to come
+  // up to stay visible — but only so far. The paper ring that separates them
+  // on a wide screen is what breaks first: enlarged to match, eighty rings
+  // inside the width of the Amazon stop being eighty rings and fuse into one
+  // pale blot, which reads as a hole punched through South America. So the
+  // ring goes and the dot stays small. Overlapping green on green still reads
+  // as a crowd, which is what the cluster is.
+  .map-art__dots circle {
+    r: 9;                              // adjust dot size on phones
+    stroke: none;
+  }
+
+  .map-art__box { stroke-width: 3; }
+}

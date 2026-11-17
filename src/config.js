@@ -62,20 +62,48 @@ export default {
   ],
 
 
-  // The standing map fades in under the first chapter and leaves at the
-  // countdown. Between those two it does not move at all — see
-  // src/components/standing-map/standing-map.jsx for why.
-  mapReveal: { trigger: 'chapter 01', start: 'top bottom', end: 'top 70%' },
+  // THE FOUR MAPS.
+  //
+  // Three of them are figures in the flow of the story, declared on the
+  // chapters they belong to as `map: { inline: true, ... }` and rendered by
+  // chapter.jsx directly under that chapter's copy. They hold still and scroll
+  // away with it.
+  //
+  // The fourth is this one. It is fixed to the foot of the screen for the
+  // closing stretch, because it is the only one with somewhere to go: it
+  // carries the hand-over into the countdown.
+  standingMap: {
+    heading: 'Indigenous and protected lands with confirmed presence of isolated peoples',
+    // Every mapped land, which is what the caption says and what both stories
+    // share. `ranked` would light this piece's own eight instead, and needs no
+    // tileset to do it — but the copy above still says ten while eight are
+    // built, so the heading would have to change with it.
+    region: 'world',
+  },
 
-  // The hand-over. Across the held chapter the map scales toward the middle
-  // of the ranked lands and fades out, which is the move the globe's camera
-  // used to make as it dove onto the first territory: glimpsed rather than
-  // watched, so it reads as the story taking over.
+  // It arrives with the chapter that hands the story over, not at the start:
+  // the first three maps have already had their say by then.
+  mapReveal: { trigger: 'chapter 06', start: 'top 80%', end: 'top 35%' },
+
+  // The hand-over. Across the held chapter the map scales toward the middle of
+  // the lands and fades out, which is the move the globe's camera used to make
+  // as it dove onto the first territory: glimpsed rather than watched, so it
+  // reads as the story taking over.
   mapHandover: {
     trigger: 'chapter 07',
-    start: 'top 55%',                  // adjust when the map starts leaving
+    // Measured, not guessed: this is the scroll position where the hand-off
+    // line has settled with its last line at 47% of the screen and the map
+    // sitting under it. At that moment chapter 07's top is at 97% of the
+    // viewport, which is what `top bottom` names.
+    start: 'top bottom',               // adjust when the map starts leaving
     end: 'bottom top',                 // adjust when it has gone
     scale: 4,                          // adjust how far it pushes in
+    // The fraction of that window at which the frame stops clipping. Zero: the
+    // whole move is unclipped, so the map grows out of its box and off the
+    // screen rather than into it. The frame still clips either side of the
+    // window, which is what keeps it in its box while it is just standing
+    // there.
+    unclipAt: 0,                       // adjust when the frame releases
   },
 
   // The legend beneath each panel.
@@ -133,6 +161,7 @@ export default {
       // Opens where the copy opens: New Guinea. No dots — this chapter is one
       // forest, not the dataset, and the island carries no mapped land at all.
       map: {
+        inline: true,
         heading: 'The forests of New Guinea',
         // No dot: the 101 mapped lands run from 77W to Halmahera at 128E and
         // not one of them is on New Guinea. What the opening describes is the
@@ -155,6 +184,7 @@ export default {
       // the Amazon: the two forest blocks this paragraph names, in the order
       // it names them, so the reader sees the spread rather than being told.
       map: {
+        inline: true,
         heading: 'Indigenous and protected lands worldwide',
         region: 'world',
       },
@@ -172,6 +202,7 @@ export default {
     {
       id: 'chapter 03',
       map: {
+        inline: true,
         heading: 'Indigenous and protected lands in South America',
         region: 'south-america',
       },
@@ -188,10 +219,6 @@ export default {
     // chapter 04 — the whole dataset, in numbers
     {
       id: 'chapter 04',
-      map: {
-        heading: 'Indigenous and protected lands in South America',
-        region: 'south-america',
-      },
       alignment: 'fully',
       card: true,
       hidden: false,
@@ -205,10 +232,6 @@ export default {
     // chapter 05 — the two ends of the list against each other
     {
       id: 'chapter 05',
-      map: {
-        heading: 'Indigenous and protected lands in South America',
-        region: 'south-america',
-      },
       alignment: 'fully',
       card: true,
       hidden: false,
@@ -246,18 +269,6 @@ export default {
       // countdown. It used to be the beat where a flying camera finally came
       // to rest; the map never moved in the first place, so what it holds now
       // is the reader's attention rather than the globe's position.
-      map: {
-        heading: 'Indigenous and protected lands with confirmed presence of isolated peoples',
-        // Every mapped land, which is what this caption says and what both
-        // stories share.
-        //
-        // The ranked set is now drawn from this piece's own data rather than
-        // from the shared Mapbox style — `region: 'ranked'` lights the eight
-        // the countdown goes on to show, and nothing has to be uploaded for
-        // it. It is not switched on because the heading above would have to
-        // change with it, and the copy still says ten while eight are built.
-        region: 'world',
-      },
       alignment: 'fully',
       // Still named for the globe it no longer holds: the flag means "this
       // chapter is the map and nothing else", which is as true of the one as
@@ -273,13 +284,6 @@ export default {
       id: 'Top 8',
       type: 'stage',
       stage: 'AreaReveal',
-      map: {
-        // The hand-over itself is `mapHandover` at the top of this file: one
-        // window, rather than a camera move written into the section that
-        // happens to be climbing over the map at the time.
-        heading: '',
-        region: 'ranked',
-      },
       areaId: 8,
       eager: true,
       panels: {
