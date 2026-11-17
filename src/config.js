@@ -62,16 +62,20 @@ export default {
   ],
 
 
-  // THE FOUR MAPS.
+  // THE THREE MAPS.
   //
-  // All four are declared on the chapter they belong to, as `map: { ... }`,
-  // and rendered by chapter.jsx directly under that chapter's copy. Three are
-  // plain figures: they hold still and scroll away with the paragraph that
-  // introduced them.
+  // All three are declared on the chapter they belong to, as `map: { ... }`,
+  // and rendered by chapter.jsx directly under that chapter's copy. The first
+  // two are plain figures: they hold still and scroll away with the paragraph
+  // that introduced them. New Guinea on chapter 01, the world on 02.
   //
-  // The fourth carries `sticky: true`, which is now only a flag for "this is
-  // the one that moves". It arrives the same way as the others and keeps
-  // going; what it does differently is zoom and fade on its way off the top.
+  // The last carries `sticky: true`, which is now only a flag for "this is the
+  // one that moves". It arrives the same way as the others and keeps going;
+  // what it does differently is zoom and fade on its way off the top.
+  //
+  // A South America close-up sat on chapter 03 and has been taken out. The
+  // `south-america` region is still built, so putting it back is a `map`
+  // block on that chapter and nothing else.
 
   // How the fourth map leaves, once it has locked. It has no trigger of its
   // own any more: the move starts at the lock and ends as the runway runs out,
@@ -180,11 +184,6 @@ export default {
     // chapter 03 — method
     {
       id: 'chapter 03',
-      map: {
-        inline: true,
-        heading: 'Indigenous and protected lands in South America',
-        region: 'south-america',
-      },
       alignment: 'fully',
       card: true,
       hidden: false,
