@@ -62,8 +62,14 @@
 
 // Names what the map is showing. In the flow above it, as on the other three,
 // rather than floating over its top edge.
+//
+// Stacked above the drawing. Both are positioned and neither carried a
+// z-index, so they painted in source order and the map came second — which
+// was invisible until the clip came off and the zoom started growing upward
+// over the heading and wiping it out halfway through the hand-over.
 .standing-map__heading {
   position: relative;
+  z-index: 1;
   margin: 0 0 0.55rem;                 // adjust heading to map gap
   text-align: center;
   font-family: var(--font-text);
@@ -93,8 +99,14 @@
 
 // Names what the map is showing. In the flow above it, as on the other three,
 // rather than floating over its top edge.
+//
+// Stacked above the drawing. Both are positioned and neither carried a
+// z-index, so they painted in source order and the map came second — which
+// was invisible until the clip came off and the zoom started growing upward
+// over the heading and wiping it out halfway through the hand-over.
 .standing-map__heading {
   position: relative;
+  z-index: 1;
   margin: 0 0 0.55rem;                 // adjust heading to map gap
   text-align: center;
   font-family: var(--font-text);
