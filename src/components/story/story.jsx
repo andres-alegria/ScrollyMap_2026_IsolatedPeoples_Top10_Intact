@@ -8,7 +8,7 @@ import AreaMenu from '../area-menu/area-menu';
 import { useTranslation } from 'react-i18next';
 import './story.scss';
 
-const Story = ({ title, subtitle, byline, theme, chapters, alignment, currentChapterId, footer, credits, social, logos, hasIntro, setCurrentChapter, setCurrentAction, panelLabels }) => {
+const Story = ({ title, subtitle, byline, theme, chapters, alignment, currentChapterId, footer, credits, social, logos, hasIntro, setCurrentChapter, setCurrentAction, panelLabels, mapHandover }) => {
   const { t } = useTranslation();
 
   return (
@@ -53,6 +53,7 @@ const Story = ({ title, subtitle, byline, theme, chapters, alignment, currentCha
             theme={theme}
             {...chapter}
             panelLabels={panelLabels}
+            mapHandover={mapHandover}
             currentChapterId={currentChapterId}
             setCurrentChapter={setCurrentChapter}
             setCurrentAction={setCurrentAction}

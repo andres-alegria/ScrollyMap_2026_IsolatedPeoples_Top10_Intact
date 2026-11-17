@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './app.scss';
 import Story from './components/story/story';
-import StandingMap from './components/standing-map/standing-map';
 import Intro from './components/intro/intro';
 import Logos from './components/logos/logos';
 import ReadingProgress from './components/reading-progress/reading-progress';
@@ -16,8 +15,6 @@ const App = (props) => {
     footer,
     intro,
     logos,
-    standingMap,
-    mapReveal,
     mapHandover,
     credits,
     panelLabels,
@@ -52,10 +49,6 @@ const App = (props) => {
         setCurrentChapter={setCurrentChapter}
         setCurrentAction={setCurrentAction}
         panelLabels={panelLabels}
-      />
-      <StandingMap
-        standingMap={standingMap}
-        mapReveal={mapReveal}
         mapHandover={mapHandover}
       />
     </div>

@@ -1,7 +1,15 @@
+// In normal flow, and that is load-bearing.
+//
+// It used to be `position: absolute; height: 100%`, so the whole story was an
+// out-of-flow box one screen tall with 28,000 px of content overflowing it.
+// The page still scrolled, because overflow propagates — but `position:
+// sticky` did not work anywhere inside it, nor anywhere else on the page: a
+// sticky element is constrained to its containing block, and that chain ended
+// in a box that stopped long before the content did. The last map needs to
+// stick, so the story has to flow.
 #story {
-  position: absolute;
+  position: relative;
   width: 100%;
-  height: 100%;
 }
 
 // Clearance for the cover, which is position:absolute and so contributes no

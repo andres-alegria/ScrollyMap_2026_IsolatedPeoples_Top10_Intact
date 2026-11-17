@@ -1,87 +1,88 @@
 @use './map-art.scss';
 
-// The last of the four maps: a fixed stage along the foot of the screen that
-// the closing stretch of the introduction scrolls down to. The drawing itself
-// is in map-art.scss, shared with the three that sit in the flow of the story;
-// what is here is only the standing behaviour — where it sits, the paper it
-// brings with it, and the frame it breaks out of at the hand-over.
+// The last of the four maps. It flows in after its paragraph like the other
+// three, then locks to the foot of the screen and stays there while the story
+// scrolls on behind it. The drawing itself is in map-art.scss, shared with the
+// three that only ever sit in the flow.
+
+// The runway is what sticky measures against: the map holds its lock for this
+// height less its own, so this is the length of the hand-over.
+.standing-map__runway {
+  position: relative;
+  height: 175vh;                       // adjust how long the map holds
+}
 
 .standing-map {
-  // Sized from its height so it keeps the same presence on any screen, then
-  // capped by width so it cannot run off a phone. 2.4312 is the drawing's own
-  // ratio (2000 x 823) — change it only if the crop in the build script does.
+  // Sized from the viewport's height so it keeps the same presence on any
+  // screen, then capped by width so it cannot run off a phone. 2.4312 is the
+  // drawing's own ratio (2000 x 823) — change it only if the crop in the
+  // build script does.
   --map-w: min(92vw, 1180px, calc(45vh * 2.4312));   // adjust map size
   --map-ratio: 2.4312;
 
-  position: fixed;
-  // Lifted clear of the screen's edge. Flush, the South America bracket —
-  // whose southern side is at 56S, a whisker inside the map's own 57S crop —
-  // closed exactly on the bottom pixel and read as running off the page.
-  bottom: 2.5vh;                       // adjust how far it sits off the edge
-  left: 50%;
-  transform: translateX(-50%);
+  // Sticky, not fixed. It travels with the copy until its bottom edge reaches
+  // the foot of the screen and then holds there.
+  //
+  // The inset is `top`, and it is set from JavaScript (see LOCK_VH in
+  // standing-map.jsx). A bottom inset would be the mirror of what is wanted —
+  // it holds a box from falling below a line, which pins it on the way UP and
+  // does nothing on the way down. The top it needs is the screen's height less
+  // its own, which is only knowable after layout.
+  position: sticky;
+  top: var(--map-lock, auto);
   width: var(--map-w);
-  height: calc(var(--map-w) / var(--map-ratio));
-  // ABOVE the copy, not behind it. The copy is centred and full width, so it
-  // runs straight across the map; rather than move the text aside, the map
-  // brings its own ground up with it (the band below) and the copy disappears
-  // into that ground as it scrolls down to it. Kept under the furniture —
-  // reading progress is 20, the jump bar 50.
+  margin: 0 auto;
+  // Above the ranked sections, which rise behind it while it is leaving, and
+  // under the furniture — reading progress is 20, the jump bar 50.
   z-index: 6;
   pointer-events: none;
-  opacity: 0;                          // the reveal window brings it in
 }
 
-// The layer that leaves at the hand-over. It exists only so that the two
-// scrubbed windows — fading in, and fading out into the countdown — are never
-// both writing opacity on the same element.
-//
-// The band is on this layer rather than on the root for the same reason: it
-// has to go when the map goes. Left on the root, whose opacity the reveal
-// window pins at 1 for the rest of the page, it would still be masking the
-// bottom of the screen all the way down the countdown.
+// The layer that leaves at the hand-over, so that the fade has an element of
+// its own and never shares a property with anything else.
 .standing-map__leaving {
-  width: 100%;
-  height: 100%;
+  position: relative;
 }
 
-// The ground the map stands on, and what the copy scrolling down to it
-// disappears into.
-//
-// Full-bleed, from a little above the heading to the foot of the screen. It is
-// the page's own paper and grain, so it is invisible as a surface; what it
-// does is stop the copy before it reaches the map. The top edge is masked to a
-// soft fade rather than a cut, so a line of text dissolves on the way down
-// instead of being sliced off mid-stroke.
+// The ground the map stands on. Full-bleed, from above the heading to a little
+// below the map — the page's own paper and grain, so it is invisible as a
+// surface. Its job is to keep whatever is rising behind the map from showing
+// through around its edges while it is locked.
 .standing-map__leaving::before {
   content: '';
   position: absolute;
-  left: -100vw;                        // wider than the map box, to full bleed
+  left: -100vw;                        // wider than the map, to full bleed
   right: -100vw;
-  bottom: -2.5vh;                      // matches the map's lift off the edge
-  top: -5.5rem;                        // adjust where the copy starts to go
+  top: -1.75rem;                       // adjust the paper above the heading
+  bottom: -2.5vh;                      // down to the foot of the screen, locked
   background-color: #f7f4ee;           // adjust band tone, matches the page
   background-image: url('../../assets/paper-grain.jpg');
   background-size: 256px 256px;        // matches the grain scale on <body>
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 2.75rem);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 2.75rem);
+}
+
+// Names what the map is showing. In the flow above it, as on the other three,
+// rather than floating over its top edge.
+.standing-map__heading {
+  position: relative;
+  margin: 0 0 0.55rem;                 // adjust heading to map gap
+  text-align: center;
+  font-family: var(--font-text);
+  font-size: 1.1875rem;                // adjust heading size
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);                   // adjust heading colour
 }
 
 // The frame the map is held in, and breaks out of.
 //
 // For most of the hand-over the zoom is clipped to this box, so the map grows
-// INTO its own window. Partway through, `is-unclipped` lets go and the last of
-// the move spills past the frame and off the screen — which is the point: the
-// reader is being taken through the map rather than shown it.
+// INTO its own window. `is-unclipped` lets go and the rest of the move spills
+// past the frame and off the screen — which is the point: the reader is being
+// taken through the map rather than shown it.
 .standing-map__frame {
-  // Positioned so it paints over the band. The band is an absolutely
-  // positioned pseudo-element, and a positioned box outranks a static one
-  // whatever the source order — without this the paper covers the map and
-  // leaves nothing on screen but its heading.
   position: relative;
-  z-index: 1;
   width: 100%;
-  height: 100%;
+  height: calc(var(--map-w) / var(--map-ratio));
   overflow: hidden;
 }
 
@@ -89,32 +90,16 @@
   overflow: visible;
 }
 
-// Names what the map is showing, across its upper edge. It has no plate of its
-// own: the band behind the whole map is its ground.
-.standing-map__heading {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  margin: 0;
-  transform: translateY(-100%);        // adjust heading height above the map
-  text-align: center;
-
-  font-family: var(--font-text);
-  font-size: 1.1875rem;                // adjust heading size
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--ink);                   // adjust heading colour
-  padding: 0.5rem 1rem 0.65rem;        // adjust heading spacing
-}
-
 @media (max-width: 999px) {
   .standing-map {
     --map-w: min(96vw, calc(30vh * 2.4312));    // adjust map size on phones
   }
 
+  .standing-map__runway {
+    height: 150vh;                     // adjust the hold on phones
+  }
+
   .standing-map__heading {
     font-size: 1rem;                   // adjust heading size on phones
-    padding: 0.4rem 1.2rem;
   }
 }

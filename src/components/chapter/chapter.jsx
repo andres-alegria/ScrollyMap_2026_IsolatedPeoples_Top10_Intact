@@ -6,6 +6,7 @@ import { Waypoint } from 'react-waypoint';
 import LegendIcon from '../icons/legend-icon';
 import { STAGES } from "../stages/stage-registry";
 import InlineMap from '../standing-map/inline-map';
+import StandingMap from '../standing-map/standing-map';
 import useLineSplit from './use-line-split';
 
 
@@ -97,6 +98,7 @@ function Chapter({
   displayText,
   globeOnly,
   map,
+  mapHandover,
   alignment,
   setCurrentChapter,
   setCurrentAction,
@@ -267,6 +269,17 @@ const StageComponent = isStage ? STAGES[stage] : null;
   </div>
 )}
 
+      {/* The fourth map. Outside the card on purpose: the card caps its
+          measure for reading, and this one is wider than the copy. It flows
+          in like the other three and then locks to the foot of the screen. */}
+      {map && map.sticky && (
+        <StandingMap
+          heading={map.heading}
+          region={map.region}
+          runway={map.runway}
+          mapHandover={mapHandover}
+        />
+      )}
     </div>
   );
 }

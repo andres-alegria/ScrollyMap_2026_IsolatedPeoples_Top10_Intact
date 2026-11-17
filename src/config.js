@@ -64,47 +64,20 @@ export default {
 
   // THE FOUR MAPS.
   //
-  // Three of them are figures in the flow of the story, declared on the
-  // chapters they belong to as `map: { inline: true, ... }` and rendered by
-  // chapter.jsx directly under that chapter's copy. They hold still and scroll
-  // away with it.
+  // All four are declared on the chapter they belong to, as `map: { ... }`,
+  // and rendered by chapter.jsx directly under that chapter's copy. Three are
+  // plain figures: they hold still and scroll away with the paragraph that
+  // introduced them.
   //
-  // The fourth is this one. It is fixed to the foot of the screen for the
-  // closing stretch, because it is the only one with somewhere to go: it
-  // carries the hand-over into the countdown.
-  standingMap: {
-    heading: 'Indigenous and protected lands with confirmed presence of isolated peoples',
-    // Every mapped land, which is what the caption says and what both stories
-    // share. `ranked` would light this piece's own eight instead, and needs no
-    // tileset to do it — but the copy above still says ten while eight are
-    // built, so the heading would have to change with it.
-    region: 'world',
-  },
+  // The fourth carries `sticky: true`. It arrives the same way, but when its
+  // bottom edge reaches the foot of the screen it locks there and the story
+  // scrolls on behind it while it leaves. `runway` is how long it holds — the
+  // lock lasts that height less the map's own.
 
-  // It arrives with the chapter that hands the story over, not at the start:
-  // the first three maps have already had their say by then.
-  //
-  // It has to be ALL the way in before any of that chapter's copy is on
-  // screen. The paper band the map brings with it is what hides the copy that
-  // scrolls down into it, and the band fades in with the map — so while the
-  // map was still arriving the band was translucent and the hand-off line
-  // could be read straight through it, greyed, lying across the middle of the
-  // world. Measured: chapter 06's copy reaches the top of the band at scroll
-  // 4320 and enters the screen at about 3870, and this window closes at 3605.
-  mapReveal: { trigger: 'chapter 06', start: 'top bottom', end: 'top 75%' },
-
-  // The hand-over. Across the held chapter the map scales toward the middle of
-  // the lands and fades out, which is the move the globe's camera used to make
-  // as it dove onto the first territory: glimpsed rather than watched, so it
-  // reads as the story taking over.
+  // How the fourth map leaves, once it has locked. It has no trigger of its
+  // own any more: the move starts at the lock and ends as the runway runs out,
+  // both of which the component reads from the layout.
   mapHandover: {
-    trigger: 'chapter 07',
-    // Measured, not guessed: this is the scroll position where the hand-off
-    // line has settled with its last line at 47% of the screen and the map
-    // sitting under it. At that moment chapter 07's top is at 97% of the
-    // viewport, which is what `top bottom` names.
-    start: 'top bottom',               // adjust when the map starts leaving
-    end: 'bottom top',                 // adjust when it has gone
     // Where the camera ends up, by name. The points are declared as lon/lat in
     // build_world_robinson.py and projected there, so this can be read against
     // an atlas: `mediterranean` is 15E 38N. Aiming between the South American
@@ -274,20 +247,26 @@ export default {
       onChapterExit: [],
     },
 
-    // chapter 07 — the screen the map gets to itself
+    // chapter 07 — the map's own stretch of page
     {
       id: 'chapter 07',
-      // No copy: one screen whose only job is to leave the map alone long
-      // enough to be read, and then to carry the hand-over into the
-      // countdown. It used to be the beat where a flying camera finally came
-      // to rest; the map never moved in the first place, so what it holds now
-      // is the reader's attention rather than the globe's position.
+      // A card, so the step is full width and at full opacity: the non-card
+      // chapters carry `opacity-50`, which both dims whatever is inside them
+      // and makes a stacking context of the step, trapping the map's z-index.
+      // There is no copy; the map is the whole of this chapter.
+      card: true,
       alignment: 'fully',
-      // Still named for the globe it no longer holds: the flag means "this
-      // chapter is the map and nothing else", which is as true of the one as
-      // it was of the other.
-      globeOnly: true,
       hidden: false,
+      map: {
+        sticky: true,
+        heading: 'Indigenous and protected lands with confirmed presence of isolated peoples',
+        // Every mapped land, which is what the heading says and what both
+        // stories share. `ranked` would light this piece's own eight instead,
+        // and needs no tileset to do it — but the copy above still says ten
+        // while eight are built, so the heading would have to change with it.
+        region: 'world',
+        runway: '175vh',               // adjust how long the map holds
+      },
       onChapterEnter: [],
       onChapterExit: [],
     },
