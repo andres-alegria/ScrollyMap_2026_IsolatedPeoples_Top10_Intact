@@ -259,12 +259,16 @@ export default {
       hidden: false,
       map: {
         sticky: true,
-        heading: 'Indigenous and protected lands with confirmed presence of isolated peoples',
-        // Every mapped land, which is what the heading says and what both
-        // stories share. `ranked` would light this piece's own eight instead,
-        // and needs no tileset to do it — but the copy above still says ten
-        // while eight are built, so the heading would have to change with it.
-        region: 'world',
+        heading: 'Lands in this Top 10 countdown',
+        // The ranked set, read from panel_meta.json by the build script — so
+        // these are the same lands the countdown below actually draws, and
+        // they cannot drift from it.
+        //
+        // NOTE FOR THE DESK: that is EIGHT dots under a heading that says ten,
+        // because #9 and #10 are still waiting on the ZITT / Waorani boundary.
+        // Nothing here needs changing when they land: the region is built from
+        // the panel list, so it becomes ten on the next run of the renderer.
+        region: 'ranked',
         runway: '175vh',               // adjust how long the map holds
       },
       onChapterEnter: [],
