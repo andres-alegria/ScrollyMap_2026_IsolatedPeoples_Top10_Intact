@@ -73,21 +73,35 @@
   color: var(--ink);                   // adjust heading colour
 }
 
-// The frame the map is held in, and breaks out of.
+// The box the map is laid out in. Nothing clips it.
 //
-// For most of the hand-over the zoom is clipped to this box, so the map grows
-// INTO its own window. `is-unclipped` lets go and the rest of the move spills
-// past the frame and off the screen — which is the point: the reader is being
-// taken through the map rather than shown it.
+// Two separate clips had to go, and the second is the one that is easy to
+// miss: an <svg> clips its own content to its viewport by default — the UA
+// stylesheet gives it `overflow: hidden` — so opening up the div around it
+// changed nothing. At scale 4 the artwork is 2,584 px wide inside an 846 px
+// box, and all of it was being thrown away.
 .standing-map__frame {
   position: relative;
   width: 100%;
   height: calc(var(--map-w) / var(--map-ratio));
-  overflow: hidden;
+  overflow: visible;
 }
 
-.standing-map__frame.is-unclipped {
+.standing-map .map-art {
   overflow: visible;
+}
+
+// Names what the map is showing. In the flow above it, as on the other three,
+// rather than floating over its top edge.
+.standing-map__heading {
+  position: relative;
+  margin: 0 0 0.55rem;                 // adjust heading to map gap
+  text-align: center;
+  font-family: var(--font-text);
+  font-size: 1.1875rem;                // adjust heading size
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);                   // adjust heading colour
 }
 
 @media (max-width: 999px) {

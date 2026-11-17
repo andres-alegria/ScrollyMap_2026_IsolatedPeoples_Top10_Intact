@@ -84,12 +84,6 @@ export default {
     // and the Asian lands put it on the equator in the Gulf of Guinea instead.
     focus: 'mediterranean',            // adjust the closing camera target
     scale: 4,                          // adjust how far it pushes in
-    // The fraction of that window at which the frame stops clipping. Zero: the
-    // whole move is unclipped, so the map grows out of its box and off the
-    // screen rather than into it. The frame still clips either side of the
-    // window, which is what keeps it in its box while it is just standing
-    // there.
-    unclipAt: 0,                       // adjust when the frame releases
   },
 
   // The legend beneath each panel.

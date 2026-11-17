@@ -36,7 +36,7 @@ const LOCK_VH = 0.025;
  * Config:
  *
  *   chapter.map   { sticky: true, heading, region, runway }
- *   mapHandover   scale, focus, unclipAt — how it leaves, once it has locked
+ *   mapHandover   scale, focus — how it leaves, once it has locked
  */
 const StandingMap = ({ heading = '', region = 'world', runway, mapHandover = {} }) => {
   const { t } = useTranslation();
@@ -109,21 +109,7 @@ const StandingMap = ({ heading = '', region = 'world', runway, mapHandover = {} 
         svgOrigin: `${fx} ${fy}`, scrollTrigger: { ...common },
       });
 
-      const at = mapHandover.unclipAt ?? 0;
-      const st = ScrollTrigger.create({
-        ...common,
-        scrub: false,
-        // onToggle as well as onUpdate: onUpdate only runs while the window is
-        // active, so scrolling back above it would otherwise leave the frame
-        // open and the map free to spill over the copy above it.
-        onUpdate: (self) => {
-          frame.classList.toggle('is-unclipped', self.progress >= at);
-        },
-        onToggle: (self) => {
-          if (!self.isActive) frame.classList.remove('is-unclipped');
-        },
-      });
-      return () => { tw.scrollTrigger?.kill(); st.kill(); };
+      return () => { tw.scrollTrigger?.kill(); };
     });
 
     const refresh = ScrollTrigger.addEventListener('refreshInit', place);
@@ -148,9 +134,8 @@ const StandingMap = ({ heading = '', region = 'world', runway, mapHandover = {} 
               screen reader and be translated with the rest of the piece. */}
           {label && <p className="standing-map__heading">{label}</p>}
 
-          {/* The frame clips the map until the hand-over says otherwise. The
-              scale is applied to a group inside the svg, so the clip and the
-              move are separate and either can change without the other. */}
+          {/* Nothing clips the map: it grows out of this box and off the
+              screen. The scale is applied to a group inside the svg. */}
           <div className="standing-map__frame" ref={frameRef}>
             <MapArt region={region} label={label} />
           </div>
