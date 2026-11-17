@@ -15,8 +15,15 @@ export { WORLD };
 // and fuse into one pale blot, which reads as a hole punched through South
 // America. So the ring goes and the dot stays small. Overlapping green on
 // green still reads as a crowd, which is what the cluster is.
+// The ring is a hairline. It is drawn in screen pixels, not drawing units
+// (`vector-effect: non-scaling-stroke` in map-art.scss), and a stroke straddles
+// the path — so at 2.6 it took 1.3 px off the dot's radius on the inside as
+// well as adding 1.3 outside, and a dot drawn about 8 px across came out more
+// ring than dot. The crowd read as a pale mass with green specks in it. One
+// pixel is enough to keep eighty overlapping dots apart; below about 0.6 they
+// start to merge again.
 const DOT = {
-  wide:   { r: 8.5, stroke: '#f7f4ee', strokeWidth: 2.6 },  // adjust dot size
+  wide:   { r: 8.5, stroke: '#f7f4ee', strokeWidth: 1 },    // adjust dot size
   narrow: { r: 9,   stroke: 'none',    strokeWidth: 0 },    // adjust on phones
 };
 const NARROW = '(max-width: 999px)';
