@@ -27,11 +27,9 @@ export default {
     //   onMobile  include in the top strip on narrow screens
     art: [
       { src: '/intro-art/yasuni-canopy.webp', left: '0%', top: '10%', width: '24.3%', onMobile: true },
-      // The globe sits under the forest piece's bottom edge and over the nets
-      // below it, which is what ties the three into one column rather than
-      // three things stacked at the same margin.
+      // Tucked under the forest piece's bottom edge, so the two read as one
+      // column rather than as two things sharing a margin.
       { src: '/intro-art/earth-left.webp', left: '0%', top: '38%', height: '28.2%' },
-      { src: '/intro-art/massaco-nets.webp', left: '0%', top: '64%', width: '12%' },
       // Flush to the right edge, and the tallest thing on that side. Listed
       // before the globe so the globe cannot be covered by it; they do not
       // overlap, but the order is what guarantees that.
