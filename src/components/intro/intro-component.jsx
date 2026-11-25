@@ -1,12 +1,11 @@
 import React from 'react';
 import './intro.scss';
-import SocialIcons from '../../components/social-icons/social-icons';
 import IntroArt from '../intro-art/intro-art';
 import Mouse from './mouse-icon';
 import Arrow from './arrow-icon';
 import { useTranslation } from 'react-i18next';
 
-const Intro = ({ title, subtitle, date, social, art = [], height }) => {
+const Intro = ({ title, subtitle, date, art = [], height }) => {
   const { t } = useTranslation();
   const heightStyle = height ? { height: `${height}px` } : undefined;
   // adjust intro separator colour here
@@ -39,9 +38,8 @@ const Intro = ({ title, subtitle, date, social, art = [], height }) => {
           </div>
           {t('scroll down to discover')}
         </div>
-        {social && (
-          <SocialIcons social={social} className="social-icons--intro absolute bottom-0 left-0" />
-        )}
+        {/* No social icons on the cover. They are still in the footer, which
+            takes the same list from config — this only drops them here. */}
       </div>
     </div>
   );

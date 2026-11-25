@@ -72,9 +72,14 @@ const StandingMap = ({ heading = '', region = 'world', mapHandover = {} }) => {
       const [fx, fy] = (mapHandover.focus && WORLD.focusPoints?.[mapHandover.focus])
         || WORLD.focusBetween || WORLD.focus;
 
+      // Anchored to the top edge, not to the focus point. Scaling about the
+      // focus grows the map in every direction, and upward means into the
+      // heading standing above it. With the origin's y at nought the top edge
+      // stays where it is and the whole move goes downward and sideways; `fx`
+      // still steers it, so the direction of travel is unchanged.
       const tw = gsap.to(art, {
         scale: mapHandover.scale ?? 4, ease: 'none',
-        svgOrigin: `${fx} ${fy}`, scrollTrigger: { ...common },
+        svgOrigin: `${fx} 0`, scrollTrigger: { ...common },
       });
       return () => { tw.scrollTrigger?.kill(); };
     });
