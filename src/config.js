@@ -10,7 +10,7 @@ export default {
     // primary forests", is a deck rather than a display line.
     title: 'Where the Forest Holds',
     subtitle:
-      "Tracking primary forest across isolated tribal lands worldwide. These are the 10 lands whose forests are least touched.",
+      "These are the 10 lands with the lowest primary forest loss",
     date: 'Nov. 0, 2026',
     // The intro collage, assembled from individual elements over the paper
     // ground. Positions are percentages of the viewport and are the knob for
@@ -155,7 +155,7 @@ export default {
       card: true,
       hidden: false,
       title: ' ',
-      description: "<p>Towers of Western New Guinea kauri (<i>Agathis labillardieri</i>) burst beyond the forest ceiling, their buttresses wide and old among the other endemic tree species crowding primary forests in Indonesian Papua.</p><p>Uncontacted tribes protect these forests through traditional ways of living in harmony with nature, said Dorince Mehue, a campaigner of the Papua region for the Indigenous Peoples’ Alliance of the Archipelago (AMAN). She estimates there are two to 10 tribes in West Papua’s forests, located in the Indonesian half of the island of New Guinea, who live in voluntary isolation.</p><p>“For them, the forest is their home, their food source, and a sacred space that must be protected for their survival,” Mehue told Mongabay.</p>",
+      description: "<p>Towers of Western New Guinea kauri (Agathis labillardieri) burst beyond the forest ceiling, their buttresses wide and old among the other endemic tree species crowding primary forests in Indonesian Papua.</p><p>Uncontacted tribes protect these forests through traditional ways of living in harmony with nature, said Dorince Mehue, a campaigner of the Papua region for the Indigenous Peoples' Alliance of the Archipelago (AMAN). She estimates there are two to 10 tribes in West Papua’s forests, located in the Indonesian half of the island of New Guinea, who live in voluntary isolation.</p><p>“For them, the forest is their home, their food source, and a sacred space that must be protected for their survival,” Mehue told Mongabay.</p>",
       onChapterEnter: [],
       onChapterExit: [],
     },
@@ -175,7 +175,7 @@ export default {
       card: true,
       hidden: false,
       title: ' ',
-      description: "<p>Around the world, there are an estimated <b>200 groups</b> of people living in voluntary isolation (also known as uncontacted people) and initial contact, like those in West Papua. Many of them inhabit large, intact tropical forest landscapes, similar to ones in New Guinea and the Amazon, where primary forests are also concentrated. The expanding pressures on these forests through logging, mining, roads and agriculture threatens the survival of these communities, researchers say.</p><p>“The [uncontacted tribes’] belief that damaging nature will bring curses or disasters to the community serves as a natural protection that is strictly adhered to,” Mehue explained. In New Guinea, they implement customary prohibitions, like Sasi “on harvesting certain natural resources for a set period of time to allow the ecosystem to recover … For them, the forest is not simply a resource to be exploited, but a sacred space and a ‘mother’ that provides all their needs.”</p>",
+      description: "<p>Around the world, there are an estimated <b>200 groups</b> of people living in voluntary isolation (also known as uncontacted people) and initial contact, like those in West Papua. Many of them inhabit intact tropical forest landscapes, similar to ones in New Guinea and the Amazon, where primary forests are also concentrated. The expanding pressures on these forests through logging, mining, roads and agriculture threatens the survival of these communities, researchers say.</p><p>“The [uncontacted tribes’] belief that damaging nature will bring curses or disasters to the community serves as a natural protection that is strictly adhered to,” Mehue explained. In New Guinea, they implement customary prohibitions, like Sasi “on harvesting certain natural resources for a set period of time to allow the ecosystem to recover … For them, the forest is not simply a resource to be exploited, but a sacred space and a ‘mother’ that provides all their needs.”</p>",
       rotateAnimation: false,
       onChapterEnter: [],
       onChapterExit: [],
@@ -188,7 +188,7 @@ export default {
       card: true,
       hidden: false,
       title: ' ',
-      description: "<p>Mongabay mapped the Indigenous territories, tribal reserves and protected areas around the world with the confirmed presence of peoples living in voluntary isolation and analyzed primary forest cover in the decade from 2015 to 2025. This assessment, using public data, exists to give a general sense of the state of forests in the protected lands uncontacted peoples depend on.</p><p>Based on these figures, we ranked the <b>10 lands in tropical humid forests with the lowest detected primary forest loss</b> between 2015 and 2025.</p><p>Using data provided by national organizations, the international working group on Indigenous Peoples in Isolation and Initial Contact (GTI PIACI) and Indigenous experts on the confirmed presence of uncontacted people, Mongabay overlapped it with Indigenous and protected lands and assembled a list of <b>65 defined lands</b> where they live. These exist across nine countries — Bolivia, Brazil, Colombia, Ecuador, India, Indonesia, Paraguay, Peru and Venezuela.</p><p>Among these, 56 lands are located in tropical moist broadleaf forests. This assessment does not showcase the exact or unique location of isolated peoples but rather the boundaries of Indigenous and protected lands their presence overlaps with.</p>",
+      description: "<p>Mongabay mapped the Indigenous territories, tribal reserves and protected areas around the world with the confirmed presence of peoples living in voluntary isolation and analyzed primary forest cover in the decade from 2015 to 2025.</p><p>This assessment, using public data, exists to give a general sense of the state of forests in the protected lands uncontacted peoples depend on.</p><p>Based on these figures, we ranked the <b>10 lands in tropical humid forests with the lowest detected primary forest loss</b> between 2015 and 2025.</p><p>Using data provided by national organizations, the international working group on Indigenous Peoples in Isolation and Initial Contact (GTI PIACI) and Indigenous experts on the confirmed presence of uncontacted people, Mongabay overlapped it with Indigenous and protected lands (Indigenous territories, tribal reserves and protected areas) and assembled a list of <b>65 defined lands</b> where they live. These exist across nine countries — Bolivia, Brazil, Colombia, Ecuador, India, Indonesia, Paraguay, Peru and Venezuela. Mongabay then analyzed tree cover using Global Nature Watch.</p><p>Among these, 56 lands are located in tropical moist broadleaf forests.</p><p>This assessment does not showcase the exact or unique location of isolated peoples but rather the boundaries of Indigenous and protected lands their presence overlaps with.</p>",
       rotateAnimation: false,
       onChapterEnter: [],
       onChapterExit: [],
@@ -201,7 +201,7 @@ export default {
       card: true,
       hidden: false,
       title: ' ',
-      description: "<p>At the turn of the millennia, all 65 lands had a tree cover of more than <b>72.38 million hectares</b> (178.85 million acres) — almost the size of Chile. Satellite data in 2001 shows 59.35 million hectares (146.7 million acres) of this was primary forest.</p><p>Between 2015 and 2025, these lands lost a total of nearly 2 million hectares (4.94 million acres). Of this, nearly 568,150 hectares (1.4 million acres) was primary forest loss — roughly the size of Montenegro.</p><p>According to the Food and Agriculture Organization (FAO), primary forests covered at least 1.18 billion hectares (2.92 billion acres) of the Earth in 2025.</p>",
+      description: "<p>Across all 65 lands, satellite data in 2001 shows <b>59.35 million hectares</b> (146.7 million acres) of this was primary forest.</p><p>Between 2015 and 2025, these lands lost a total of nearly 568,150 hectares (1.4 million acres) of primary forest — roughly the size of Montenegro.</p><p>According to the Food and Agriculture Organization (FAO), primary forests covered at least 1.18 billion hectares (2.92 billion acres) of the Earth in 2025.</p>",
       rotateAnimation: false,
       onChapterEnter: [],
       onChapterExit: [],
@@ -220,21 +220,8 @@ export default {
       // across the ten, and about 1,231 across the eight built so far — Alto
       // Purús alone is 681. The "less than half of Central Park" comparison
       // stands or falls with it. Flagged, not silently corrected.
-      description: "<p>The top 10 lands in tropical humid forests with the most intact primary forests between 2015 and 2025 had an average rate of primary forest loss of just <b>0.03%</b>, compared to an average rate of 3.6% in the top 10 lands with the most primary forest loss — approximately 120 times larger.</p><p>These 10 lands lost a total of approximately 137.7 hectares (340.3 acres) of primary forest in the 10-year period — less than half the size of New York City’s Central Park.</p><p>Management strategy isn’t necessarily the reason why some lands have higher primary forest loss than others, explained researchers. It also has to do with which lands face more threats.</p><p>Some of these primary forests are intact because of remote geography and strict government restrictions, such as the North Sentinel Island in India. While others, so far, remain far from extractive pressures and have Indigenous guardians patrolling the lands.</p>",
+      description: "<p>In the humid tropics, the top 10 lands with the most intact primary forests in the last decade had an average rate of primary forest loss of just <b>0.03%</b>, compared to an average rate of 3.6% in the top 10 lands with the most primary forest loss — approximately 120 times larger.</p><p>These 10 lands with the highest tree cover lost all together just about 137.7 hectares (340.3 acres) of primary forest in the 10-year period — less than half the size of New York City’s Central Park.</p><p>Management strategy isn’t necessarily the reason why some lands have higher primary forest loss than others, explained researchers. It also has to do with which lands face more threats.</p><p>Some of these primary forests are intact because of remote geography and strict government restrictions, such as the North Sentinel Island in India. While others, so far, remain far from extractive pressures and have Indigenous guardians patrolling their lands.</p>",
       rotateAnimation: false,
-      onChapterEnter: [],
-      onChapterExit: [],
-    },
-
-    // chapter 06 — the line into the countdown
-    {
-      id: 'chapter 06',
-      alignment: 'fully',
-      card: true,
-      displayText: true,
-      hidden: false,
-      title: ' ',
-      description: "<p>Below are the <b>10 lands in tropical humid forests</b> with the lowest detected primary forest loss — the least threatened primary forests — between 2015 and 2025. This ranking, with rates of detection accuracy, is approximate.</p>",
       onChapterEnter: [],
       onChapterExit: [],
     },
@@ -251,7 +238,7 @@ export default {
       hidden: false,
       map: {
         sticky: true,
-        heading: 'Lands in this Top 10 countdown',
+        heading: "Below are the <b>top 10 lands in tropical humid forests</b> with the lowest detected primary tree cover loss — the least threatened primary forests — between 2015 and 2025.",
         // The ranked set, read from panel_meta.json by the build script — so
         // these are the same lands the countdown below actually draws, and
         // they cannot drift from it.
@@ -284,7 +271,7 @@ export default {
       rank: '#8',
       title: 'Murunahua Indigenous Reserve',
       menuName: 'Murunahua',
-      description: "<p>Home to the Chitonahua (murunahua), Maschco Piro and Amahuaca, this 470,305-hectare (1,162,147-acre) reserve in Peru lost <b>173 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 2,698.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and shifting cultivation</li></ul>",
+      description: "<p>Home to the Chitonahua (murunahua), Maschco Piro and Amahuaca, this 470,305-hectare (1,162,147-acre) reserve in Peru lost <b>173 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 2,698.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and shifting cultivation</li><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> Not recorded</li></ul>",
     },
     // Top 7
     {
@@ -303,7 +290,7 @@ export default {
       rank: '#7',
       title: 'Kichwa Curaray Morete Playa Ancestral Community',
       menuName: 'Kichwa Curaray',
-      description: "<p>Home to the Tagaeri and Taromenane, this 53,016-hectare (131,005-acre) community land in Ecuador lost <b>19 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 2,810.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and shifting cultivation</li></ul>",
+      description: "<p>Home to the Tagaeri and Taromenane, this 53,016-hectare (131,005-acre) community land in Ecuador lost <b>19 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 2,810.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and shifting cultivation</li><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> Not recorded</li></ul>",
     },
     // Top 6
     {
@@ -322,7 +309,7 @@ export default {
       rank: '#6',
       title: 'Pucacuro National Reserve',
       menuName: 'Pucacuro',
-      description: "<p>This 637,953-hectare (1,576,414-acre) reserve in Peru lost <b>179 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 3,542.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Logging, other natural disturbances and shifting cultivation</li></ul>",
+      description: "<p>This 637,953-hectare (1,576,414-acre) reserve in Peru lost <b>179 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 3,542.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Logging, other natural disturbances and shifting cultivation</li><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> Not recorded</li></ul>",
     },
     // Top 5
     {
@@ -341,7 +328,7 @@ export default {
       rank: '#5',
       title: 'Alto Purús National Park',
       menuName: 'Alto Purús',
-      description: "<p>Home to the Mashco Piro, Curanjeño Chitonahua and Mastanahua, this 2,510,694-hectare (6,204,050-acre) park in Peru lost <b>681 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 3,643.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and permanent agriculture</li></ul>",
+      description: "<p>Home to the Mashco Piro, Curanjeño Chitonahua and Mastanahua, this 2,510,694-hectare (6,204,050-acre) park in Peru lost <b>681 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 3,643.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and permanent agriculture</li><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> Not recorded</li></ul>",
     },
     // Top 4
     {
@@ -360,7 +347,7 @@ export default {
       rank: '#4',
       title: 'Purús Communal Reserve',
       menuName: 'Purús',
-      description: "<p>Home to the Mashco Piro, this 202,033-hectare (499,234-acre) reserve in Peru lost <b>54 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 3,665.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and shifting cultivation</li></ul>",
+      description: "<p>Home to the Mashco Piro, this 202,033-hectare (499,234-acre) reserve in Peru lost <b>54 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 3,665.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and shifting cultivation</li><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> Not recorded</li></ul>",
     },
     // Top 3
     {
@@ -379,7 +366,7 @@ export default {
       rank: '#3',
       title: 'Mamoriá Grande Indigenous Territory',
       menuName: 'Mamoriá Grande',
-      description: "<p>Home to the Isolados do Mamoriá Grande, this 259,783-hectare (641,937-acre) territory in Brazil lost <b>57 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 4,526.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Logging, other natural disturbances and wildfire</li><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> 8 hectares</li></ul>",
+      description: "<p>Home to the Isolados do Mamoriá Grande, this 259,783-hectare (641,937-acre) territory in Brazil lost <b>57 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 4,526.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Logging, other natural disturbances and wildfire</li><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> 8 hectares (14.0% of all tree cover loss)</li></ul>",
     },
     // Top 2
     {
@@ -398,7 +385,7 @@ export default {
       rank: '#2',
       title: 'Mashco do Rio Chandless Indigenous Territory',
       menuName: 'Chandless',
-      description: "<p>Home to the Mashco Isolados do Rio Chandless, this 538,338-hectare (1,330,260-acre) territory in Brazil lost <b>68 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 7,585.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and permanent agriculture</li></ul>",
+      description: "<p>Home to the Mashco Isolados do Rio Chandless, this 538,338-hectare (1,330,260-acre) territory in Brazil lost <b>68 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 7,585.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Other natural disturbances, logging and permanent agriculture</li><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> Not recorded</li></ul>",
     },
     // Top 1
     {
@@ -421,8 +408,7 @@ export default {
       rank: '#1',
       title: 'North Sentinel Island Tribal Reserve',
       menuName: 'North Sentinel',
-      description: "<p>Home to the Sentinelese people, this 5,967-hectare (14,745-acre) reserve in India recorded <b>no primary forest loss at all</b> between 2015 and 2025.</p>",
+      description: "<p>Home to the Sentinelese people, this 5,967-hectare (14,745-acre) reserve in India recorded <b>no primary forest loss at all</b> between 2015 and 2025.</p><ul class='area-facts'><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> Not recorded</li></ul>",
     },
-
   ],
 };

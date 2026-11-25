@@ -34,6 +34,9 @@ const StandingMap = ({ heading = '', region = 'world', mapHandover = {} }) => {
   const frameRef = useRef(null);
 
   const label = heading ? t(heading) : '';
+  // The heading carries emphasis, so it is written as HTML. A screen reader
+  // wants the words, not the markup.
+  const plain = label.replace(/<[^>]+>/g, '');
 
   useEffect(() => {
     const root = rootRef.current;
@@ -86,13 +89,20 @@ const StandingMap = ({ heading = '', region = 'world', mapHandover = {} }) => {
     <div className="standing-map" ref={rootRef}>
       <div className="standing-map__leaving" ref={leaveRef}>
         {/* Type, not an SVG label: it has to wrap on a phone, be read by a
-            screen reader and be translated with the rest of the piece. */}
-        {label && <p className="standing-map__heading">{label}</p>}
+            screen reader and be translated with the rest of the piece.
+            Written as HTML because this line carries the emphasis it had as
+            the hand-off paragraph, which is where it came from. */}
+        {label && (
+          <p
+            className="standing-map__heading"
+            dangerouslySetInnerHTML={{ __html: label }}
+          />
+        )}
 
         {/* Nothing clips the map: it grows out of this box and off the
             screen. The scale is applied to a group inside the svg. */}
         <div className="standing-map__frame" ref={frameRef}>
-          <MapArt region={region} label={label} />
+          <MapArt region={region} label={plain} />
         </div>
       </div>
     </div>
