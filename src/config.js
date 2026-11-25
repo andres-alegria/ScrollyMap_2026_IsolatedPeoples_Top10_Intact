@@ -130,6 +130,8 @@ export default {
       + 'Forest cover and loss are from the Global Forest Change dataset v1.13 '
       + '(Hansen et al., University of Maryland), covering 2000 to 2025 and accessed through '
       + 'Google Earth Engine and Global Nature Watch. '
+      + 'Coastlines on the world maps and on the locator globes are from '
+      + 'Natural Earth. '
       + 'Ortiz-Prado, E., Cevallos-Sierra, G., Vasconez, E., Lister, A., & Pichilingue Ramos, E. '
       + '(2021). Avoiding extinction: the importance of protecting isolated Indigenous tribes. '
       + 'AlterNative: An International Journal of Indigenous Peoples, 17(1), 130-135. '
