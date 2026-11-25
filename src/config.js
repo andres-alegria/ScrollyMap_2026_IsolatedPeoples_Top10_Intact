@@ -242,7 +242,8 @@ export default {
         // The ranked set, read from panel_meta.json by the build script — so
         // these are the same lands the countdown below actually draws, and
         // they cannot drift from it. Ten dots under a heading that says ten,
-        // since the Tagaeri Taromenane boundary was settled.
+        // since the Tagaeri Taromenane boundary was settled against LandMark,
+        // the layer the Global Nature Watch dashboard itself draws.
         region: 'ranked',
       },
       onChapterEnter: [],
