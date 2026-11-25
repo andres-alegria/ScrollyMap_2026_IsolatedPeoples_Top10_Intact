@@ -70,6 +70,13 @@
 .intro__content {
   position: relative;
   z-index: 1;
+  // The cover's block is centred in a full screen, which leaves as much empty
+  // paper below the scroll cue as above the title. Padding the top pushes the
+  // whole block down by half of it, which takes that tail down without
+  // touching anything else — the cover's own height has to stay at one screen
+  // because its opaque ground is what stops the first paragraph showing
+  // through from underneath.
+  padding-top: 60px;                      // adjust the cover's balance
 }
 
 // On narrow screens the collage sits in a strip across the top, while the copy

@@ -22,6 +22,11 @@
   padding-top: 100vh;                     // adjust the gap after the cover
 }
 
+// No padding here. The space between "scroll down to discover" and the first
+// paragraph is made of two parts — the cover's own empty tail below the cue,
+// and this — and the clearance above cannot be cut instead: the cover paints
+// an opaque ground at z-index 1 for its full 100vh, so a story that started
+// any higher would slide its first lines underneath it.
 .withIntro #features {
-  padding-top: 24px;
+  padding-top: 0;
 }
