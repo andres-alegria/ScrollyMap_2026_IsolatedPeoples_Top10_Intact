@@ -216,10 +216,10 @@ export default {
       title: ' ',
       // NOTE FOR THE DESK: the 137.7-hectare total below is the figure in the
       // supplied copy, carried here as written. It does not reconcile with the
-      // workbook: column I of the "Article 2" tab sums to about 1,562 hectares
-      // across the ten, and about 1,231 across the eight built so far — Alto
-      // Purús alone is 681. The "less than half of Central Park" comparison
-      // stands or falls with it. Flagged, not silently corrected.
+      // workbook: column I of the "Article 2" tab sums to 1,562.0 hectares
+      // across the ten — Alto Purús alone is 681. The "less than half of
+      // Central Park" comparison stands or falls with it. Flagged, not
+      // silently corrected.
       description: "<p>In the humid tropics, the top 10 lands with the most intact primary forests in the last decade had an average rate of primary forest loss of just <b>0.03%</b>, compared to an average rate of 3.6% in the top 10 lands with the most primary forest loss — approximately 120 times larger.</p><p>These 10 lands with the highest tree cover lost all together just about 137.7 hectares (340.3 acres) of primary forest in the 10-year period — less than half the size of New York City’s Central Park.</p><p>Management strategy isn’t necessarily the reason why some lands have higher primary forest loss than others, explained researchers. It also has to do with which lands face more threats.</p><p>Some of these primary forests are intact because of remote geography and strict government restrictions, such as the North Sentinel Island in India. While others, so far, remain far from extractive pressures and have Indigenous guardians patrolling their lands.</p>",
       rotateAnimation: false,
       onChapterEnter: [],
@@ -241,25 +241,59 @@ export default {
         heading: "Below are the <b>top 10 lands in tropical humid forests</b> with the lowest detected primary tree cover loss — the least threatened primary forests — between 2015 and 2025.",
         // The ranked set, read from panel_meta.json by the build script — so
         // these are the same lands the countdown below actually draws, and
-        // they cannot drift from it.
-        //
-        // NOTE FOR THE DESK: that is EIGHT dots under a heading that says ten,
-        // because #9 and #10 are still waiting on the ZITT / Waorani boundary.
-        // Nothing here needs changing when they land: the region is built from
-        // the panel list, so it becomes ten on the next run of the renderer.
+        // they cannot drift from it. Ten dots under a heading that says ten,
+        // since the Tagaeri Taromenane boundary was settled.
         region: 'ranked',
       },
       onChapterEnter: [],
       onChapterExit: [],
     },
 
+    // Top 10
+    {
+      id: 'Top 10',
+      type: 'stage',
+      stage: 'AreaReveal',
+      areaId: 10,
+      eager: true,
+      panels: {
+        region: '/panels/10_pupuna_region.webp',
+        interior: '/panels/10_pupuna_interior.webp',
+      },
+      scale: { n: 10, kmFrac: 0.1386, miFrac: 0.2231 },
+      locator: [-70.331687, -3.003593],
+      adm1: 'Loreto',
+      country: 'Peru',
+      rank: '#10',
+      title: 'Pupuña Reserve',
+      menuName: 'Pupuña',
+      description: "<p>Home to the Tikuna, this 46,846-hectare (115,759-acre) reserve in Peru lost <b>20 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 2,303.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Logging and other natural disturbances</li><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> Not recorded</li></ul>",
+    },
+    // Top 9
+    {
+      id: 'Top 9',
+      type: 'stage',
+      stage: 'AreaReveal',
+      areaId: 9,
+      panels: {
+        region: '/panels/09_waorani_region.webp',
+        interior: '/panels/09_waorani_interior.webp',
+      },
+      scale: { n: 50, kmFrac: 0.1911, miFrac: 0.3076 },
+      locator: [-76.114712, -1.336805],
+      adm1: 'Pastaza and Orellana',
+      country: 'Ecuador',
+      rank: '#9',
+      title: 'Tagaeri Taromenane Intangible Zone',
+      menuName: 'Tagaeri Taromenane',
+      description: "<p>Home to the Tagaeri and Taromenane, this 818,501-hectare (2,022,557-acre) intangible zone in Ecuador lost <b>310 hectares</b> of primary forest between 2015 and 2025 — about one hectare in every 2,420.</p><ul class='area-facts'><li><span class='area-facts__label'>Top three drivers of forest loss:</span> Shifting cultivation, other natural disturbances and logging</li><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> Not recorded</li></ul>",
+    },
     // Top 8
     {
       id: 'Top 8',
       type: 'stage',
       stage: 'AreaReveal',
       areaId: 8,
-      eager: true,
       panels: {
         region: '/panels/08_murunahua_region.webp',
         interior: '/panels/08_murunahua_interior.webp',
