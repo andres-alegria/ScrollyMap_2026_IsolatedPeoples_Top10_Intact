@@ -138,7 +138,12 @@ export default {
       + 'doi:10.1177/1177180121995567 '
       // Left to right, top to bottom, as the collage is read.
       + 'Photographs in the intro collage are by Peter Prokosch / GRID-Arendal via Flickr '
-      + '(CC BY-NC-SA 2.0), Ronald Reategui, Rhett A. Butler for Mongabay, and Sernanp.',
+      + '(CC BY-NC-SA 2.0), Ronald Reategui, Rhett A. Butler for Mongabay, and Sernanp. '
+      // The card at the end borrows three pieces of the companion story's own
+      // banner art, so it borrows that story's credit line for them too.
+      + 'Photographs in the card at the end come from the banner art of '
+      + '"Forests at the Edge", by Guilherme Gnipper/Trevisan/FUNAI/Hutukara, '
+      + 'Gleison Miranda/FUNAI and Survival International.',
   },
 
   chapters: [
@@ -468,16 +473,25 @@ export default {
           + 'highest tree cover loss in the humid tropics.',
       meta: 'Maps and analysis \u00b7 2015\u20132025',
       cta: 'Explore the interactive',
+      // A collage of the companion story's own intro pieces, arranged the way
+      // that story arranges them: flat halftones overlapping on paper, each
+      // placed in percentages of the box so it holds as the card reshapes.
+      // Their red band is this card's accent, so they need no treatment here.
+      //
+      //   left/right, top/bottom   where the piece sits
+      //   width                    as % of the collage box; height follows
+      //                            the file's own ratio
+      //   order                    later pieces stack over earlier ones
       art: {
-        // One of that story's own panels — the Araribóia Indigenous Territory,
-        // the land that lost the most. Every red pixel is tree cover gone
-        // since 2015, which is the thing this piece's panels almost never
-        // show. Hansen GFC v1.13, already credited in the sources.
-        src: '/companion/forests-at-the-edge.webp',
-        src500: '/companion/forests-at-the-edge_500.webp',
-        alt: 'Satellite map of the Araribóia Indigenous Territory in Brazil, its '
-           + 'outline drawn in white, with tree cover lost since 2015 marked in red '
-           + 'across the land around it and in patches inside it.',
+        ground: '#efe9e0',                   // adjust collage ground
+        pieces: [
+          { src: '/companion/edge-people-water.webp', left: '9%',  top: '7%',     width: '62%' },
+          { src: '/companion/edge-house.webp',        left: '39%', bottom: '7%',  width: '56%' },
+          { src: '/companion/edge-face.webp',         left: '3%',  bottom: '10%', width: '20%' },
+        ],
+        alt: 'A collage from the companion story: people crossing a river sandbank, '
+           + 'an aerial view of a ring of thatched longhouses, and a close-up of a '
+           + 'face, printed as halftones and banded in red.',
       },
     },
   ],

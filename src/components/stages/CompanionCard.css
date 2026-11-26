@@ -28,21 +28,32 @@
   color: var(--ink);
 }
 
+/* The collage field. The pieces are placed on it in percentages, so the
+   arrangement holds whatever shape the box takes. */
 .companion__art {
   position: relative;
   overflow: hidden;
-  background-color: #181818;                /* adjust art ground */
-  min-height: 13rem;
+  background-color: #efe9e0;                /* adjust collage ground */
+  min-height: 15rem;
 }
 
-.companion__art img {
+.companion__piece {
+  position: absolute;
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* The panel is a square; on the wide layout it is shown as a tall-ish
-     rectangle, so the crop is taken from the middle of the territory. */
-  object-position: 50% 50%;
+  height: auto;                             /* each piece keeps its own ratio */
+}
+
+/* A wash of the card's ground over the inner edge of the collage, so the two
+   halves meet without a seam — the same join the piece's own intro makes
+   between its artwork and its paper. */
+.companion__art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background-image: linear-gradient(90deg,
+                    rgba(242, 238, 230, 0) 82%, rgba(242, 238, 230, 1) 100%);
 }
 
 .companion__copy {
@@ -139,7 +150,13 @@
 
   .companion__art {
     min-height: 0;
-    aspect-ratio: 16 / 9;                   /* adjust art height on phones */
+    aspect-ratio: 5 / 3;                    /* adjust art height on phones */
+  }
+
+  /* Stacked, so the join runs along the bottom rather than the side. */
+  .companion__art::after {
+    background-image: linear-gradient(180deg,
+                      rgba(242, 238, 230, 0) 76%, rgba(242, 238, 230, 1) 100%);
   }
 
   .companion__copy {

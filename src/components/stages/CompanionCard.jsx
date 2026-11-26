@@ -27,7 +27,13 @@ import './CompanionCard.css';
  *   deck      one or two lines on what is in it
  *   meta      the line under the deck
  *   cta       the button's words
- *   art       { src, src500, alt }
+ *   art       { ground, alt, pieces: [{ src, left/right, top/bottom, width }] }
+ *
+ * The art is a collage of the companion story's own intro pieces, placed the
+ * way that story places them — percentages of the box, so the arrangement
+ * holds as the card reshapes. They are flat halftones carrying that piece's
+ * red band, which is also this card's accent, so they sit together without
+ * any treatment here.
  */
 const CompanionCard = ({
   chapter,
@@ -53,16 +59,35 @@ const CompanionCard = ({
         // the arrow must not be read at all.
         aria-label={`${tr(heading)} — ${tr(cta)}`}
       >
-        {art.src && (
-          <div className="companion__art">
-            <img
-              src={art.src}
-              srcSet={art.src500 ? `${art.src500} 500w, ${art.src} 900w` : undefined}
-              sizes="(max-width: 720px) 92vw, 24rem"
-              alt={art.alt || ''}
-              loading="lazy"
-              decoding="async"
-            />
+        {Array.isArray(art.pieces) && art.pieces.length > 0 && (
+          <div
+            className="companion__art"
+            style={art.ground ? { backgroundColor: art.ground } : undefined}
+            // One picture made of several files: the group carries the
+            // description and each piece is marked decorative, so a screen
+            // reader hears it once.
+            role="img"
+            aria-label={art.alt || ''}
+          >
+            {art.pieces.map((piece, i) => (
+              <img
+                key={piece.src}
+                className="companion__piece"
+                src={piece.src}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                decoding="async"
+                style={{
+                  left: piece.left,
+                  right: piece.right,
+                  top: piece.top,
+                  bottom: piece.bottom,
+                  width: piece.width,
+                  zIndex: i,
+                }}
+              />
+            ))}
           </div>
         )}
 
