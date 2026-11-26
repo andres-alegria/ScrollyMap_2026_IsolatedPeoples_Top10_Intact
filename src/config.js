@@ -138,12 +138,7 @@ export default {
       + 'doi:10.1177/1177180121995567 '
       // Left to right, top to bottom, as the collage is read.
       + 'Photographs in the intro collage are by Peter Prokosch / GRID-Arendal via Flickr '
-      + '(CC BY-NC-SA 2.0), Ronald Reategui, Rhett A. Butler for Mongabay, and Sernanp. '
-      // The card at the end borrows three pieces of the companion story's own
-      // banner art, so it borrows that story's credit line for them too.
-      + 'Photographs in the card at the end come from the banner art of '
-      + '"Forests at the Edge", by Guilherme Gnipper/Trevisan/FUNAI/Hutukara, '
-      + 'Gleison Miranda/FUNAI and Survival International.',
+      + '(CC BY-NC-SA 2.0), Ronald Reategui, Rhett A. Butler for Mongabay, and Sernanp.',
   },
 
   chapters: [
