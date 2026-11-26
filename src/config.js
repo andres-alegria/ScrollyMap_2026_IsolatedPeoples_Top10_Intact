@@ -132,9 +132,12 @@ export default {
       + 'Google Earth Engine and Global Nature Watch. '
       + 'Coastlines on the world maps and on the locator globes are from '
       + 'Natural Earth. '
-      + 'Ortiz-Prado, E., Cevallos-Sierra, G., Vasconez, E., Lister, A., & Pichilingue Ramos, E. '
-      + '(2021). Avoiding extinction: the importance of protecting isolated Indigenous tribes. '
-      + 'AlterNative: An International Journal of Indigenous Peoples, 17(1), 130-135. '
+      // The docx asks for "a short version of this citation": first author and
+      // et al., the title, the journal and the DOI, which is the part that
+      // makes it findable. The five co-authors, the journal's subtitle and the
+      // page range are what a source note at the foot of a graphic can drop.
+      + 'Ortiz-Prado et al. (2021), \u201cAvoiding extinction: the importance of '
+      + 'protecting isolated Indigenous tribes,\u201d AlterNative 17(1). '
       + 'doi:10.1177/1177180121995567 '
       // Left to right, top to bottom, as the collage is read.
       + 'Photographs in the intro collage are by Peter Prokosch / GRID-Arendal via Flickr '
