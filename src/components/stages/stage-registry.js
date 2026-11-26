@@ -14,6 +14,7 @@ import PlainText from "./PlainText";
 import PlainImage from "./PlainImage";
 import AreaReveal from "./AreaReveal";
 import WorldLosses from "./WorldLosses";
+import CompanionCard from "./CompanionCard";
 
 export const STAGES = {
   // Horizontal image-strip scroller
@@ -38,4 +39,7 @@ export const STAGES = {
 
   // The closing world map: worst-hit land per country, Robinson projection
   WorldLosses,
+
+  // The hand-off to the companion story, after the last land
+  CompanionCard,
 };

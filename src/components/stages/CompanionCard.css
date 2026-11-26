@@ -1,0 +1,153 @@
+/* The hand-off card at the foot of the piece.
+   Art on one side, copy on the other, the whole card one link. */
+
+.companion {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: clamp(2rem, 7vh, 5rem) 1.5rem;   /* adjust room around the card */
+}
+
+.companion__card {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: stretch;
+  width: min(58rem, 100%);                  /* adjust card width */
+  text-decoration: none;
+  color: var(--ink);
+  background-color: #f2eee6;                /* adjust card ground, a shade off the page */
+  border-top: 1px solid #d8d2c6;            /* adjust card hairlines */
+  border-bottom: 1px solid #d8d2c6;
+}
+
+/* The link colour rule in app.scss is a blanket `a { color: #0071bc }`, so the
+   card has to say otherwise for itself and for everything inside it. */
+.companion__card,
+.companion__card:hover,
+.companion__card:visited {
+  color: var(--ink);
+}
+
+.companion__art {
+  position: relative;
+  overflow: hidden;
+  background-color: #181818;                /* adjust art ground */
+  min-height: 13rem;
+}
+
+.companion__art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* The panel is a square; on the wide layout it is shown as a tall-ish
+     rectangle, so the crop is taken from the middle of the territory. */
+  object-position: 50% 50%;
+}
+
+.companion__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 3.2vw, 2.75rem);
+}
+
+.companion__eyebrow {
+  font-family: var(--font-text);
+  font-size: 12px;                          /* adjust eyebrow size */
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e86d6d;                           /* adjust accent, the loss colour */
+}
+
+.companion__eyebrow::after {
+  content: '';
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  background-color: #e86d6d;                /* adjust accent rule */
+  margin-top: 0.6rem;
+}
+
+.companion__heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem);  /* adjust headline size */
+  line-height: 1.12;
+  color: var(--ink);
+}
+
+.companion__deck {
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: clamp(14px, 1.1vw, 16px);      /* adjust deck size */
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.companion__meta {
+  font-family: var(--font-text);
+  font-size: 12px;                          /* adjust meta size */
+  letter-spacing: 0.02em;
+  color: var(--ink-mute);
+}
+
+.companion__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  align-self: flex-start;
+  margin-top: 0.3rem;
+  padding: 0.7rem 1.2rem;                   /* adjust button padding */
+  background-color: var(--ink);             /* adjust button ground */
+  color: #f7f4ee;                           /* adjust button text */
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: background-color 0.18s ease;
+}
+
+.companion__card:hover .companion__go,
+.companion__card:focus-visible .companion__go {
+  background-color: #e86d6d;                /* adjust hover ground */
+}
+
+.companion__card:focus-visible {
+  outline: 2px solid #e86d6d;
+  outline-offset: 3px;
+}
+
+.companion__go svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+
+/* Phone: art on top, copy under it, as the drafted card did. */
+@media (max-width: 720px) {
+  .companion {
+    padding: clamp(1.5rem, 5vh, 3rem) 1rem;
+  }
+
+  .companion__card {
+    grid-template-columns: 1fr;
+  }
+
+  .companion__art {
+    min-height: 0;
+    aspect-ratio: 16 / 9;                   /* adjust art height on phones */
+  }
+
+  .companion__copy {
+    padding: 1.3rem 1.4rem 1.7rem;
+    gap: 0.65rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .companion__go { transition: none; }
+}

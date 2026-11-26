@@ -97,10 +97,10 @@ export default {
     // stops a reader taking the pale ground of the second beat for cleared
     // land rather than for ground the panel is simply no longer lit on.
     beats: [
-      { label: 'Tree cover lost since 2015 up to 2025',
+      { label: 'Tree cover lost between 2015-2025',
         color: '#e86d6d', textColor: '#181818' },          /* adjust loss box + text */
       // Pine Green — the colour the panels paint forest with
-      { label: 'Forest inside the area',
+      { label: 'Forest inside the boundary',
         color: '#0a2f29', textColor: '#ffffff' },          /* adjust interior box + text */
     ],
     // the label that has not been reached yet, as plain text with no box
@@ -135,7 +135,10 @@ export default {
       + 'Ortiz-Prado, E., Cevallos-Sierra, G., Vasconez, E., Lister, A., & Pichilingue Ramos, E. '
       + '(2021). Avoiding extinction: the importance of protecting isolated Indigenous tribes. '
       + 'AlterNative: An International Journal of Indigenous Peoples, 17(1), 130-135. '
-      + 'doi:10.1177/1177180121995567',
+      + 'doi:10.1177/1177180121995567 '
+      // Left to right, top to bottom, as the collage is read.
+      + 'Photographs in the intro collage are by Peter Prokosch / GRID-Arendal via Flickr '
+      + '(CC BY-NC-SA 2.0), Ronald Reategui, Rhett A. Butler for Mongabay, and Sernanp.',
   },
 
   chapters: [
@@ -446,6 +449,36 @@ export default {
       title: 'North Sentinel Island Tribal Reserve',
       menuName: 'North Sentinel',
       description: "<p>Home to the Sentinelese people, this 5,967-hectare (14,745-acre) reserve in India recorded <b>no primary forest loss at all</b> between 2015 and 2025.</p><ul class='area-facts'><li><span class='area-facts__label'>Tree cover loss due to wildfires:</span> Not recorded</li></ul>",
+    },
+
+    // The hand-off to the companion story. After the last land, before the
+    // credits. Shape taken from the card drafted for the loss piece when we
+    // were weighing how to put that story into an article.
+    {
+      id: 'companion',
+      type: 'stage',
+      stage: 'CompanionCard',
+      // PLACEHOLDER — the loss piece's current Vercel address. Swap it for
+      // the published Mongabay URL when that exists; it is the only thing on
+      // this chapter that has to change.
+      href: 'https://scrollymap2026isolatedpeoplestop10l.vercel.app/',
+      eyebrow: 'The companion story',
+      heading: 'Forests at the Edge',
+      deck: 'Explore the 10 lands inhabited by voluntarily isolated peoples with the '
+          + 'highest tree cover loss in the humid tropics.',
+      meta: 'Maps and analysis \u00b7 2015\u20132025',
+      cta: 'Explore the interactive',
+      art: {
+        // One of that story's own panels — the Araribóia Indigenous Territory,
+        // the land that lost the most. Every red pixel is tree cover gone
+        // since 2015, which is the thing this piece's panels almost never
+        // show. Hansen GFC v1.13, already credited in the sources.
+        src: '/companion/forests-at-the-edge.webp',
+        src500: '/companion/forests-at-the-edge_500.webp',
+        alt: 'Satellite map of the Araribóia Indigenous Territory in Brazil, its '
+           + 'outline drawn in white, with tree cover lost since 2015 marked in red '
+           + 'across the land around it and in patches inside it.',
+      },
     },
   ],
 };
