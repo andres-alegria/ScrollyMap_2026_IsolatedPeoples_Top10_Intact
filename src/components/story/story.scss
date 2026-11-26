@@ -10,6 +10,27 @@
 #story {
   position: relative;
   width: 100%;
+
+  // The fourth intro map grows past both edges of the screen as it zooms, and
+  // the paper band behind it reaches 100vw to either side. Both are
+  // deliberate — the clip came off that map on purpose — but neither should
+  // widen the page. Anything sticking out to the right adds horizontal
+  // scroll, and the reader gets a scrollbar and a band of empty paper beside
+  // the story. The map keeps its zoomed scale after the hand-over, so that
+  // scrollbar was there for the whole of the countdown.
+  //
+  // `clip`, not `hidden`: hidden would make a scroll container of this box,
+  // and every ranked section inside it is held in place by `position:
+  // sticky`, which resolves against the nearest scrollport. clip creates no
+  // scrollport, so the sticky sections are untouched. Only the horizontal
+  // axis is clipped; the vertical stays `visible`, which is the one mixed
+  // pair CSS allows.
+  //
+  // Here rather than on `html`, where Chromium does not propagate a
+  // root-level `clip` to the viewport and it would do nothing — or on
+  // `#features`, which carries side margins and would cut the full-bleed maps
+  // short of the screen edge. This box is exactly the width of the viewport.
+  overflow-x: clip;
 }
 
 // Clearance for the cover, which is position:absolute and so contributes no
